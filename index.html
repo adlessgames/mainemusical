@@ -243,7 +243,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
   <div class="mbox">
     <button class="mclose" onclick="closeM('m-maketeacher')">✕</button>
     <h3>🎓 TEACHER SETUP</h3>
-    <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6;">Enter the username of the account you want to make a teacher. You need the Supabase service key for this, OR you can use the quick method below.</p>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6;">Enter the username to promote and the secret teacher code.</p>
     <div class="fr"><label>Username to promote</label><input type="text" id="mt-uname" placeholder="e.g. msteacher"></div>
     <div class="fr"><label>Secret code (set in Supabase)</label><input type="password" id="mt-code" placeholder="Teacher setup code"></div>
     <div id="mt-msg" class="amsg"></div>
@@ -654,15 +654,21 @@ async function doLogout(){
 }
 
 async function makeTeacher(){
-  const uname = (document.getElementById('mt-uname').value||'').trim().toLowerCase();
-  const msgEl = document.getElementById('mt-msg');
+  const uname  = (document.getElementById('mt-uname').value||'').trim().toLowerCase();
+  const code   = (document.getElementById('mt-code').value||'').trim();
+  const msgEl  = document.getElementById('mt-msg');
   msgEl.style.display='none';
+
   if(!uname){ msgEl.className='amsg err'; msgEl.textContent='Enter a username.'; msgEl.style.display='block'; return; }
+  if(code !== 'maniemusicaleteacher'){
+    msgEl.className='amsg err'; msgEl.textContent='Wrong code.'; msgEl.style.display='block'; return;
+  }
+
   // Check profile exists
-  const {data:prof,error} = await sb.from('profiles').select('id,username,is_teacher').eq('username',uname).maybeSingle();
-  if(error||!prof){
+  const {data:prof, error:fetchErr} = await sb.from('profiles').select('id,username,is_teacher').eq('username',uname).maybeSingle();
+  if(fetchErr||!prof){
     msgEl.className='amsg err';
-    msgEl.textContent='Username not found. Make sure they have signed up first.';
+    msgEl.textContent='Username "'+uname+'" not found. Sign up first, then come back here.';
     msgEl.style.display='block'; return;
   }
   if(prof.is_teacher){
@@ -670,16 +676,24 @@ async function makeTeacher(){
     msgEl.textContent=uname+' is already a teacher!';
     msgEl.style.display='block'; return;
   }
-  // Try to update — this will only work if RLS allows it (service role) or you run SQL directly
-  const {error:upErr} = await sb.from('profiles').update({is_teacher:true}).eq('username',uname);
+
+  // Update via RPC to bypass RLS (uses security definer)
+  const {error:upErr} = await sb.rpc('promote_teacher', {p_username: uname, p_code: code});
   if(upErr){
-    msgEl.className='amsg err';
-    msgEl.textContent='Permission denied. Use the SQL method below instead.';
-    msgEl.style.display='block'; return;
+    // fallback: direct update (works if already a teacher or RLS allows)
+    const {error:upErr2} = await sb.from('profiles').update({is_teacher:true}).eq('username',uname);
+    if(upErr2){
+      msgEl.className='amsg err';
+      msgEl.textContent='Could not promote. Run this in Supabase SQL Editor: UPDATE profiles SET is_teacher=true WHERE username=\''+uname+'\';';
+      msgEl.style.display='block'; return;
+    }
   }
+
   msgEl.className='amsg ok';
-  msgEl.textContent='✓ '+uname+' is now a teacher! Log out and back in to see the panel.';
+  msgEl.textContent='✓ '+uname+' is now a teacher! Sign in to see the 🎓 Panel.';
   msgEl.style.display='block';
+  document.getElementById('mt-uname').value='';
+  document.getElementById('mt-code').value='';
 }
 
 // auto restore session
@@ -687,7 +701,7 @@ async function makeTeacher(){
   try{
     const {data} = await sb.auth.getSession();
     if(data&&data.session){
-      await onLogin(data.session.user);
+      await onLogin(data.session.user); // onLogin calls showPage('home') internally
     } else {
       showPage('login');
     }
@@ -695,10 +709,17 @@ async function makeTeacher(){
     console.warn('session restore failed',e);
     showPage('login');
   }
-  // hide splash regardless
+  // hide splash AFTER page is shown
   const splash = document.getElementById('splash');
-  if(splash) splash.style.display='none';
+  if(splash) splash.remove();
 })();
+
+// Guard: if somehow login page shows while logged in, redirect
+setInterval(()=>{
+  if(currentUser && document.getElementById('pg-login').classList.contains('on')){
+    showPage('home');
+  }
+}, 300);
 
 // ── NAVIGATION ───────────────────────────────────────────────
 function showPage(name){
