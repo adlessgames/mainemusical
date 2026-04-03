@@ -447,14 +447,18 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 </div>
 
 <!-- load supabase then run everything -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
 // ══════════════════════════════════════
 //  CONFIGURE THESE
-const SUPABASE_URL      = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL      = 'https://jxcpsgiptutnxnnrvcwr.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4Y3BzZ2lwdHV0bnhubnJ2Y3dyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNTA3OTAsImV4cCI6MjA5MDcyNjc5MH0.oD_KvrNy-Vx6pWjvVcUFpWNqx0jo4NaAuF9TKbenA5Y';
 // ══════════════════════════════════════
 
+if(typeof supabase === 'undefined'){
+  document.body.innerHTML = '<div style="color:#ff4455;font-family:monospace;padding:2rem;background:#000;min-height:100vh;">❌ Supabase failed to load.<br><br>Make sure you are opening this file from a web server (not directly from your file system), or have an internet connection for the CDN.<br><br>If running locally, use: <code>npx serve .</code> or upload the file to your hosting.</div>';
+  throw new Error('Supabase CDN failed to load');
+}
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ── STATE ──────────────────────────────────────────────────
@@ -1072,7 +1076,7 @@ async function tpLoadVotes(){
 }
 
 // ── INIT ─────────────────────────────────────────────────────
-if(SUPABASE_URL!=='YOUR_SUPABASE_URL') document.getElementById('cfgbanner').style.display='none';
+document.getElementById('cfgbanner').style.display='none';
 applyLang();
 </script>
 </body>
