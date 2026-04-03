@@ -183,7 +183,13 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 </head>
 <body>
 
-<div class="cfgbanner" id="cfgbanner">
+<!-- SPLASH shown while session loads -->
+<div id="splash" style="position:fixed;inset:0;background:var(--g0);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;">
+  <div style="font-family:'Orbitron',monospace;font-size:1.4rem;color:var(--g3);letter-spacing:4px;text-shadow:0 0 20px var(--g3);">MANIE<span style="color:var(--text);font-weight:400;">MUSICALE</span></div>
+  <div style="width:36px;height:36px;border:2px solid var(--g2);border-top-color:var(--g3);border-radius:50%;animation:sp .8s linear infinite;"></div>
+</div>
+
+
   ⚠ &nbsp;Open this file and set <code>SUPABASE_URL</code> and <code>SUPABASE_ANON_KEY</code> near the top of the &lt;script&gt; tag at the bottom, then run <code>supabase_setup.sql</code> in Supabase SQL Editor.
 </div>
 
@@ -211,7 +217,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 </div>
 
 <!-- LOGIN -->
-<div class="page on" id="pg-login">
+<div class="page" id="pg-login">
   <div class="lbox">
     <div class="ltitle" id="ltitle">LOGIN</div>
     <div class="lsub">MANIE MUSICALE</div>
@@ -226,6 +232,31 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
     </div>
     <button class="bprim" id="authbtn" onclick="doAuth()">SIGN IN</button>
     <div class="ltog"><span id="tog-txt">No account?</span> <a onclick="toggleMode()" id="tog-lnk">Register</a></div>
+    <div style="margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--g2);text-align:center;">
+      <a onclick="openM('m-maketeacher')" style="font-size:.72rem;color:var(--muted);cursor:pointer;letter-spacing:1px;">🎓 Set up teacher account</a>
+    </div>
+  </div>
+</div>
+
+<!-- MAKE TEACHER MODAL -->
+<div class="mbg" id="m-maketeacher">
+  <div class="mbox">
+    <button class="mclose" onclick="closeM('m-maketeacher')">✕</button>
+    <h3>🎓 TEACHER SETUP</h3>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6;">Enter the username of the account you want to make a teacher. You need the Supabase service key for this, OR you can use the quick method below.</p>
+    <div class="fr"><label>Username to promote</label><input type="text" id="mt-uname" placeholder="e.g. msteacher"></div>
+    <div class="fr"><label>Secret code (set in Supabase)</label><input type="password" id="mt-code" placeholder="Teacher setup code"></div>
+    <div id="mt-msg" class="amsg"></div>
+    <div class="mact">
+      <button class="bsm" onclick="closeM('m-maketeacher')">Cancel</button>
+      <button class="bsm gn" onclick="makeTeacher()">Make Teacher</button>
+    </div>
+    <div style="margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--g2);font-size:.75rem;color:var(--muted);line-height:1.7;">
+      <strong style="color:var(--text);">Easy method — do this once:</strong><br>
+      1. Go to Supabase → SQL Editor<br>
+      2. Run: <code style="background:var(--g2);padding:1px 4px;">UPDATE profiles SET is_teacher = true WHERE username = 'YOUR_USERNAME';</code><br>
+      3. Log out and back in — the 🎓 Panel will appear.
+    </div>
   </div>
 </div>
 
@@ -622,12 +653,51 @@ async function doLogout(){
   showPage('login');
 }
 
+async function makeTeacher(){
+  const uname = (document.getElementById('mt-uname').value||'').trim().toLowerCase();
+  const msgEl = document.getElementById('mt-msg');
+  msgEl.style.display='none';
+  if(!uname){ msgEl.className='amsg err'; msgEl.textContent='Enter a username.'; msgEl.style.display='block'; return; }
+  // Check profile exists
+  const {data:prof,error} = await sb.from('profiles').select('id,username,is_teacher').eq('username',uname).maybeSingle();
+  if(error||!prof){
+    msgEl.className='amsg err';
+    msgEl.textContent='Username not found. Make sure they have signed up first.';
+    msgEl.style.display='block'; return;
+  }
+  if(prof.is_teacher){
+    msgEl.className='amsg ok';
+    msgEl.textContent=uname+' is already a teacher!';
+    msgEl.style.display='block'; return;
+  }
+  // Try to update — this will only work if RLS allows it (service role) or you run SQL directly
+  const {error:upErr} = await sb.from('profiles').update({is_teacher:true}).eq('username',uname);
+  if(upErr){
+    msgEl.className='amsg err';
+    msgEl.textContent='Permission denied. Use the SQL method below instead.';
+    msgEl.style.display='block'; return;
+  }
+  msgEl.className='amsg ok';
+  msgEl.textContent='✓ '+uname+' is now a teacher! Log out and back in to see the panel.';
+  msgEl.style.display='block';
+}
+
 // auto restore session
 (async()=>{
   try{
     const {data} = await sb.auth.getSession();
-    if(data&&data.session) await onLogin(data.session.user);
-  } catch(e){ console.warn('session restore failed',e); }
+    if(data&&data.session){
+      await onLogin(data.session.user);
+    } else {
+      showPage('login');
+    }
+  } catch(e){
+    console.warn('session restore failed',e);
+    showPage('login');
+  }
+  // hide splash regardless
+  const splash = document.getElementById('splash');
+  if(splash) splash.style.display='none';
 })();
 
 // ── NAVIGATION ───────────────────────────────────────────────
