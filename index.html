@@ -700,26 +700,19 @@ async function makeTeacher(){
 (async()=>{
   try{
     const {data} = await sb.auth.getSession();
-    if(data&&data.session){
-      await onLogin(data.session.user); // onLogin calls showPage('home') internally
+    if(data && data.session && data.session.user){
+      await onLogin(data.session.user);
     } else {
       showPage('login');
     }
   } catch(e){
-    console.warn('session restore failed',e);
+    console.warn('session restore:',e);
     showPage('login');
+  } finally {
+    const splash = document.getElementById('splash');
+    if(splash) splash.remove();
   }
-  // hide splash AFTER page is shown
-  const splash = document.getElementById('splash');
-  if(splash) splash.remove();
 })();
-
-// Guard: if somehow login page shows while logged in, redirect
-setInterval(()=>{
-  if(currentUser && document.getElementById('pg-login').classList.contains('on')){
-    showPage('home');
-  }
-}, 300);
 
 // ── NAVIGATION ───────────────────────────────────────────────
 function showPage(name){
@@ -955,24 +948,36 @@ function renderPicker(containerId, mode){
   const pA=mode==='add'?amPickA:emPickA;
   const pB=mode==='add'?amPickB:emPickB;
   if(!allSongs.length){ el.innerHTML='<div style="color:var(--muted);font-size:.78rem;">'+tx('nosongspool')+'</div>'; return; }
-  el.innerHTML=allSongs.map(s=>{
+  el.innerHTML=allSongs.map((s,i)=>{
     const lbl=songLabel(s);
     const isA=pA===lbl, isB=pB===lbl;
-    return `<div class="spkitem${isA?' sa':''}${isB?' sb':''}" onclick="pickSong('${mode}',${JSON.stringify(lbl)})">${isA?'🟢 ':''}${isB?'🔵 ':(isA?'':'  ')}${lbl}</div>`;
+    return '<div class="spkitem'+(isA?' sa':'')+(isB?' sb':'')+'" data-mode="'+mode+'" data-idx="'+i+'" onclick="pickSongByIdx(this)">'+( isA?'🟢 ':isB?'🔵 ':'')+lbl+'</div>';
   }).join('');
+}
+
+function pickSongByIdx(el){
+  const mode=el.dataset.mode;
+  const idx=parseInt(el.dataset.idx);
+  if(isNaN(idx)||idx<0||idx>=allSongs.length) return;
+  const lbl=songLabel(allSongs[idx]);
+  pickSong(mode, lbl);
 }
 
 function pickSong(mode, lbl){
   if(mode==='add'){
-    if(!amPickA||amPickA===lbl){ amPickA=lbl; }
-    else if(!amPickB&&lbl!==amPickA){ amPickB=lbl; }
+    if(amPickA===lbl){ amPickA=amPickB||null; amPickB=null; }
+    else if(amPickB===lbl){ amPickB=null; }
+    else if(!amPickA){ amPickA=lbl; }
+    else if(!amPickB){ amPickB=lbl; }
     else { amPickA=lbl; amPickB=null; }
     document.getElementById('am-albl').textContent=amPickA||'—';
     document.getElementById('am-blbl').textContent=amPickB||'—';
     renderPicker('am-spkr','add');
   } else {
-    if(!emPickA||emPickA===lbl){ emPickA=lbl; }
-    else if(!emPickB&&lbl!==emPickA){ emPickB=lbl; }
+    if(emPickA===lbl){ emPickA=emPickB||null; emPickB=null; }
+    else if(emPickB===lbl){ emPickB=null; }
+    else if(!emPickA){ emPickA=lbl; }
+    else if(!emPickB){ emPickB=lbl; }
     else { emPickA=lbl; emPickB=null; }
     document.getElementById('em-albl').textContent=emPickA||'—';
     document.getElementById('em-blbl').textContent=emPickB||'—';
