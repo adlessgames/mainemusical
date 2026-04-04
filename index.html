@@ -6,17 +6,13 @@
 <title>Manie Musicale</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --g0:#000a02;--g1:#001a06;--g2:#003310;--g3:#00ff6a;--g4:#00cc55;--g5:#009940;
-  --dim:#00ff6a14;--dim2:#00ff6a30;--text:#c8ffd8;--muted:#4a8860;
-  --danger:#ff4455;--warn:#ffaa00;--card:#001a0699;--bdr:1px solid #00ff6a33;
-}
+:root{--g0:#000a02;--g1:#001a06;--g2:#003310;--g3:#00ff6a;--g4:#00cc55;--g5:#009940;--dim:#00ff6a14;--dim2:#00ff6a30;--text:#c8ffd8;--muted:#4a8860;--danger:#ff4455;--warn:#ffaa00;--card:#001a0699;--bdr:1px solid #00ff6a33;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--g0);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 39px,var(--dim) 39px,var(--dim) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,var(--dim) 39px,var(--dim) 40px);pointer-events:none;z-index:0;}
-::-webkit-scrollbar{width:6px;height:6px;}
-::-webkit-scrollbar-track{background:var(--g1);}
-::-webkit-scrollbar-thumb{background:var(--g5);border-radius:3px;}
+::-webkit-scrollbar{width:6px;height:6px;}::-webkit-scrollbar-track{background:var(--g1);}::-webkit-scrollbar-thumb{background:var(--g5);border-radius:3px;}
+
+/* NAV */
 nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;height:56px;background:#000a02f2;border-bottom:1px solid var(--g4);backdrop-filter:blur(8px);gap:.5rem;flex-wrap:wrap;}
 .logo{font-family:'Orbitron',monospace;font-weight:900;font-size:1.15rem;color:var(--g3);letter-spacing:3px;text-shadow:0 0 16px var(--g3);white-space:nowrap;}
 .logo span{color:var(--text);font-weight:400;}
@@ -29,13 +25,23 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .nbtn.lng{border-color:var(--g2);color:var(--muted);font-size:.72rem;padding:3px 7px;}
 .nbtn.lng.on{border-color:var(--g4);color:var(--g4);background:var(--dim);}
 #ubadge{font-size:.7rem;color:var(--muted);padding:3px 7px;border:1px solid var(--g2);white-space:nowrap;}
+
+/* TICKER */
 .ticker{background:var(--g2);border-bottom:1px solid var(--g4);padding:4px 0;overflow:hidden;position:relative;z-index:1;}
 .ticker-track{display:flex;animation:tick 35s linear infinite;white-space:nowrap;}
 .ticker-track span{padding:0 3rem;font-size:.72rem;letter-spacing:2px;color:var(--g4);}
 @keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.page{display:none;position:relative;z-index:1;padding:1.4rem;}
+
+/* VOTE TOAST */
+#vote-toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;background:var(--g1);border:1px solid var(--g4);padding:.65rem 1.1rem;font-size:.8rem;color:var(--g3);letter-spacing:1px;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;font-family:'Orbitron',monospace;}
+#vote-toast.show{opacity:1;transform:translateY(0);}
+
+/* PAGES */
+.page{display:none;position:relative;z-index:1;padding:1.4rem;min-height:calc(100vh - 80px);}
 .page.on{display:block;}
-#pg-login{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 80px);}
+#pg-login{display:flex;align-items:center;justify-content:center;}
+
+/* LOGIN */
 .lbox{background:var(--card);border:1px solid var(--g4);padding:2rem 1.7rem;width:100%;max-width:350px;position:relative;}
 .lbox::before{content:'';position:absolute;top:-1px;left:15%;right:15%;height:2px;background:var(--g3);box-shadow:0 0 10px var(--g3);}
 .ltitle{font-family:'Orbitron',monospace;font-size:1.25rem;color:var(--g3);text-align:center;margin-bottom:.2rem;text-shadow:0 0 12px var(--g3);}
@@ -52,8 +58,12 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .amsg{padding:6px 10px;margin-bottom:.8rem;font-size:.8rem;display:none;}
 .amsg.err{background:#ff445522;border:1px solid var(--danger);color:#ff8899;}
 .amsg.ok{background:#00ff6a11;border:1px solid var(--g5);color:#39ff8a;}
+
+/* SECTION HEADER */
 .shdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;padding-bottom:.55rem;border-bottom:1px solid var(--g2);}
 .shdr h2{font-family:'Orbitron',monospace;font-size:.95rem;color:var(--g3);letter-spacing:2px;}
+
+/* BUTTONS */
 .bsm{background:transparent;border:1px solid var(--g5);color:var(--g4);font-family:'Rajdhani',sans-serif;font-size:.78rem;padding:5px 10px;cursor:pointer;transition:all .18s;letter-spacing:1px;white-space:nowrap;}
 .bsm:hover{background:var(--dim2);border-color:var(--g3);color:var(--g3);}
 .bsm.rd{border-color:#ff445566;color:#ff8899;}
@@ -63,6 +73,8 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .bsm.gn{border-color:var(--g4);color:var(--g4);}
 .bsm.gn:hover{background:var(--dim2);border-color:var(--g3);color:var(--g3);}
 .brow{display:flex;gap:.45rem;flex-wrap:wrap;margin-bottom:.9rem;}
+
+/* HOME */
 .hero{text-align:center;padding:1.8rem 1rem 1.4rem;position:relative;z-index:1;}
 .hero h1{font-family:'Orbitron',monospace;font-size:clamp(1.5rem,5vw,2.8rem);font-weight:900;color:var(--g3);letter-spacing:4px;text-shadow:0 0 24px var(--g3);margin-bottom:.35rem;}
 .hero p{color:var(--muted);font-size:.9rem;letter-spacing:2px;}
@@ -72,6 +84,8 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .scard .ico{font-size:1.5rem;margin-bottom:.3rem;}
 .scard .slbl{font-family:'Orbitron',monospace;font-size:.65rem;letter-spacing:2px;color:var(--g4);}
 .scard .sval{font-size:.72rem;color:var(--muted);margin-top:.18rem;}
+
+/* VIDEOS */
 .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
 .vcard{background:var(--card);border:var(--bdr);overflow:hidden;transition:border-color .18s;}
 .vcard:hover{border-color:var(--g4);}
@@ -82,6 +96,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .vinfo{padding:.6rem .85rem;}
 .vinfo h3{font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.1rem;}
 .vinfo p{font-size:.72rem;color:var(--muted);}
+
 /* BRACKET */
 .bouter{overflow-x:auto;padding-bottom:.8rem;}
 .bracket{display:flex;align-items:flex-start;min-width:860px;}
@@ -91,14 +106,14 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .bmatch{background:var(--card);border:var(--bdr);margin:0 3px;position:relative;transition:border-color .18s;}
 .bmatch.voting{border-color:var(--g4);}
 .bmatch.voting::before{content:'VOTE';position:absolute;top:-7px;left:50%;transform:translateX(-50%);font-family:'Orbitron',monospace;font-size:.52rem;letter-spacing:1px;color:var(--g3);background:var(--g0);padding:0 4px;}
-.bmatch.closed{background:#111;border:1px solid #2a2a2a;}
+.bmatch.closed{background:#0d0d0d;border:1px solid #222;}
 .bsong{padding:5px 8px;font-size:.8rem;border-bottom:1px solid var(--g2);display:flex;align-items:center;gap:5px;transition:all .18s;position:relative;overflow:hidden;}
 .bsong:last-of-type{border-bottom:none;}
 .bsong .snm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .bsong .vcnt{font-size:.68rem;color:var(--muted);min-width:28px;text-align:right;}
 .bsong.win{color:var(--g3);font-weight:600;}
 .bsong.win .snm::before{content:'▶ ';}
-.bsong.lose{color:#2a2a2a;text-decoration:line-through;}
+.bsong.lose{color:#333;text-decoration:line-through;}
 .bsong.clickable{cursor:pointer;}
 .bsong.clickable:hover{background:var(--dim2);color:var(--g3);}
 .bsong.myvote{background:var(--dim);color:var(--g4);}
@@ -108,6 +123,14 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .bleg{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:.85rem;font-size:.72rem;color:var(--muted);}
 .bleg span{display:flex;align-items:center;gap:4px;}
 .bdot{width:7px;height:7px;border-radius:50%;}
+
+/* BRACKET TABS */
+.btabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem;}
+.btab{background:transparent;border:1px solid var(--g2);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.78rem;padding:4px 12px;cursor:pointer;transition:all .18s;letter-spacing:1px;}
+.btab:hover{border-color:var(--g5);color:var(--text);}
+.btab.on{border-color:var(--g4);color:var(--g4);background:var(--dim);}
+.btab.active-bracket{border-color:var(--g3);color:var(--g3);}
+
 /* TEACHER PANEL */
 .tpgrid{display:grid;grid-template-columns:190px 1fr;gap:1.1rem;min-height:calc(100vh - 130px);}
 .tpsidebar{background:var(--card);border:var(--bdr);}
@@ -118,6 +141,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .tpsec{display:none;}
 .tpsec.on{display:block;}
 .tpsec h3{font-family:'Orbitron',monospace;font-size:.78rem;color:var(--g4);letter-spacing:2px;margin-bottom:.9rem;padding-bottom:.4rem;border-bottom:1px solid var(--g2);}
+
 /* FORMS */
 .fr{margin-bottom:.8rem;}
 .fr label{display:block;font-size:.7rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:4px;}
@@ -125,6 +149,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .fr input:focus,.fr select:focus,.fr textarea:focus{border-color:var(--g3);}
 .fr select option{background:var(--g1);}
 .fg2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+
 /* TABLE */
 .dtbl{width:100%;border-collapse:collapse;font-size:.8rem;}
 .dtbl th{font-family:'Orbitron',monospace;font-size:.58rem;letter-spacing:2px;color:var(--muted);padding:.45rem .6rem;text-align:left;border-bottom:1px solid var(--g2);}
@@ -132,12 +157,15 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .dtbl tr:last-child td{border-bottom:none;}
 .dtbl tr:hover td{background:var(--dim);}
 .tact{display:flex;gap:.28rem;flex-wrap:wrap;}
+
 /* BADGE */
 .bdg{display:inline-block;font-size:.62rem;padding:2px 6px;letter-spacing:1px;text-transform:uppercase;}
 .bdg.tch{background:#00ff6a22;border:1px solid var(--g5);color:var(--g4);}
 .bdg.vt{background:#00ff6a22;border:1px solid var(--g4);color:var(--g3);}
 .bdg.cl{background:#22222222;border:1px solid #444;color:#777;}
 .bdg.pd{background:#ffaa0011;border:1px solid #ffaa0044;color:#ffaa00;}
+.bdg.act{background:#00ff6a33;border:1px solid var(--g3);color:var(--g3);}
+
 /* MODAL */
 .mbg{position:fixed;inset:0;background:#000000cc;z-index:500;align-items:center;justify-content:center;display:none;}
 .mbg.on{display:flex;}
@@ -146,6 +174,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .mclose{position:absolute;top:.75rem;right:.85rem;background:transparent;border:none;color:var(--muted);font-size:1.05rem;cursor:pointer;}
 .mclose:hover{color:var(--danger);}
 .mact{display:flex;gap:.5rem;margin-top:1.1rem;justify-content:flex-end;}
+
 /* SONG PICKER */
 .spkr{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;max-height:240px;overflow-y:auto;margin-bottom:.4rem;}
 .spkitem{background:var(--g0);border:1px solid var(--g2);padding:6px 9px;cursor:pointer;transition:all .18s;font-size:.78rem;}
@@ -153,12 +182,19 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .spkitem.sa{border-color:var(--g3);background:var(--dim2);color:var(--g3);}
 .spkitem.sb{border-color:#44aaff;background:#44aaff14;color:#44aaff;}
 .spkleg{display:flex;gap:.9rem;font-size:.68rem;color:var(--muted);margin-bottom:.4rem;}
+
 /* RESULT BAR */
 .rbar{display:flex;align-items:center;gap:7px;margin:3px 0;}
 .rtrack{flex:1;background:var(--g2);height:7px;border-radius:4px;overflow:hidden;}
 .rfill{height:100%;background:var(--g4);transition:width .45s;}
 .rlbl{font-size:.7rem;color:var(--muted);min-width:55px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .rcnt{font-size:.7rem;color:var(--g4);min-width:35px;text-align:right;}
+
+/* USER TABLE */
+.usr-row{display:flex;align-items:center;justify-content:space-between;padding:.55rem .7rem;border-bottom:1px solid var(--dim);font-size:.82rem;}
+.usr-row:last-child{border-bottom:none;}
+.usr-row:hover{background:var(--dim);}
+
 /* MISC */
 .empty{text-align:center;padding:2rem;color:var(--muted);}
 .empty .ico{font-size:1.8rem;margin-bottom:.4rem;opacity:.35;}
@@ -166,8 +202,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .spin{text-align:center;padding:1.5rem;color:var(--muted);font-size:.78rem;letter-spacing:2px;}
 .spin::before{content:'';display:block;width:15px;height:15px;border:2px solid var(--g2);border-top-color:var(--g3);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto .3rem;}
 @keyframes sp{to{transform:rotate(360deg)}}
-.cfgbanner{background:#ff445511;border:1px solid #ff445566;color:#ff8899;padding:.75rem 1rem;font-size:.76rem;letter-spacing:1px;position:relative;z-index:1;}
-.cfgbanner code{background:#ff445522;padding:1px 4px;font-family:monospace;}
+
 @media(max-width:680px){
   nav{padding:0 .7rem;height:auto;padding-top:5px;padding-bottom:5px;}
   .logo{font-size:.9rem;}
@@ -183,15 +218,14 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 </head>
 <body>
 
-<!-- SPLASH shown while session loads -->
-<div id="splash" style="position:fixed;inset:0;background:var(--g0);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;">
+<!-- SPLASH -->
+<div id="splash" style="position:fixed;inset:0;background:var(--g0);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;">
   <div style="font-family:'Orbitron',monospace;font-size:1.4rem;color:var(--g3);letter-spacing:4px;text-shadow:0 0 20px var(--g3);">MANIE<span style="color:var(--text);font-weight:400;">MUSICALE</span></div>
   <div style="width:36px;height:36px;border:2px solid var(--g2);border-top-color:var(--g3);border-radius:50%;animation:sp .8s linear infinite;"></div>
 </div>
 
-
-  ⚠ &nbsp;Open this file and set <code>SUPABASE_URL</code> and <code>SUPABASE_ANON_KEY</code> near the top of the &lt;script&gt; tag at the bottom, then run <code>supabase_setup.sql</code> in Supabase SQL Editor.
-</div>
+<!-- VOTE TOAST -->
+<div id="vote-toast"></div>
 
 <nav>
   <div class="logo">MANIE<span>MUSICALE</span></div>
@@ -209,114 +243,74 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
   </div>
 </nav>
 
-<div class="ticker">
-  <div class="ticker-track">
-    <span>🎵 MANIE MUSICALE</span><span>⭐ VOTE FOR YOUR SONG</span><span>🏆 MARCH MADNESS</span><span>🎬 WATCH VIDEOS</span>
-    <span>🎵 MANIE MUSICALE</span><span>⭐ VOTE FOR YOUR SONG</span><span>🏆 MARCH MADNESS</span><span>🎬 WATCH VIDEOS</span>
-  </div>
-</div>
+<div class="ticker"><div class="ticker-track" id="ticker-track">
+  <span>🎵 MANIE MUSICALE</span><span>⭐ VOTE FOR YOUR SONG</span><span>🏆 MARCH MADNESS</span><span>🎬 WATCH VIDEOS</span>
+  <span>🎵 MANIE MUSICALE</span><span>⭐ VOTE FOR YOUR SONG</span><span>🏆 MARCH MADNESS</span><span>🎬 WATCH VIDEOS</span>
+</div></div>
 
-<!-- LOGIN -->
+<!-- ══ LOGIN ══ -->
 <div class="page" id="pg-login">
   <div class="lbox">
     <div class="ltitle" id="ltitle">LOGIN</div>
     <div class="lsub">MANIE MUSICALE</div>
     <div class="amsg" id="amsg"></div>
-    <div class="fld">
-      <label id="lbl-uname">Username</label>
-      <input type="text" id="inp-uname" placeholder="Username" autocomplete="username" onkeydown="if(event.key==='Enter')doAuth()">
+    <div class="fld"><label id="lbl-u">Username</label>
+      <input type="text" id="inp-u" placeholder="Username" autocomplete="username" onkeydown="if(event.key==='Enter')doAuth()">
     </div>
-    <div class="fld">
-      <label id="lbl-pass">Password</label>
-      <input type="password" id="inp-pass" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doAuth()">
+    <div class="fld"><label id="lbl-p">Password</label>
+      <input type="password" id="inp-p" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doAuth()">
     </div>
     <button class="bprim" id="authbtn" onclick="doAuth()">SIGN IN</button>
     <div class="ltog"><span id="tog-txt">No account?</span> <a onclick="toggleMode()" id="tog-lnk">Register</a></div>
-    <div style="margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--g2);text-align:center;">
-      <a onclick="openM('m-maketeacher')" style="font-size:.72rem;color:var(--muted);cursor:pointer;letter-spacing:1px;">🎓 Set up teacher account</a>
+    <div style="margin-top:1.1rem;padding-top:.9rem;border-top:1px solid var(--g2);text-align:center;">
+      <a onclick="openM('m-teacher-setup')" style="font-size:.72rem;color:var(--muted);cursor:pointer;letter-spacing:1px;">🎓 Teacher setup</a>
     </div>
   </div>
 </div>
 
-<!-- MAKE TEACHER MODAL -->
-<div class="mbg" id="m-maketeacher">
-  <div class="mbox">
-    <button class="mclose" onclick="closeM('m-maketeacher')">✕</button>
-    <h3>🎓 TEACHER SETUP</h3>
-    <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6;">Enter the username to promote and the secret teacher code.</p>
-    <div class="fr"><label>Username to promote</label><input type="text" id="mt-uname" placeholder="e.g. msteacher"></div>
-    <div class="fr"><label>Secret code (set in Supabase)</label><input type="password" id="mt-code" placeholder="Teacher setup code"></div>
-    <div id="mt-msg" class="amsg"></div>
-    <div class="mact">
-      <button class="bsm" onclick="closeM('m-maketeacher')">Cancel</button>
-      <button class="bsm gn" onclick="makeTeacher()">Make Teacher</button>
-    </div>
-    <div style="margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--g2);font-size:.75rem;color:var(--muted);line-height:1.7;">
-      <strong style="color:var(--text);">Easy method — do this once:</strong><br>
-      1. Go to Supabase → SQL Editor<br>
-      2. Run: <code style="background:var(--g2);padding:1px 4px;">UPDATE profiles SET is_teacher = true WHERE username = 'YOUR_USERNAME';</code><br>
-      3. Log out and back in — the 🎓 Panel will appear.
-    </div>
-  </div>
-</div>
-
-<!-- HOME -->
+<!-- ══ HOME ══ -->
 <div class="page" id="pg-home">
-  <div class="hero">
-    <h1>MANIE MUSICALE</h1>
-    <p id="hero-sub">WELCOME · LA MUSIQUE EN FOLIE</p>
-  </div>
+  <div class="hero"><h1>MANIE MUSICALE</h1><p id="hero-sub">WELCOME · LA MUSIQUE EN FOLIE</p></div>
   <div class="scards">
-    <div class="scard" onclick="showPage('videos')">
-      <div class="ico">🎬</div>
-      <div class="slbl" id="sc-videos">VIDEOS</div>
-      <div class="sval" id="sc-vcount">—</div>
-    </div>
-    <div class="scard" onclick="showPage('bracket')">
-      <div class="ico">🏆</div>
-      <div class="slbl" id="sc-bracket">BRACKET</div>
-      <div class="sval">March Madness</div>
-    </div>
+    <div class="scard" onclick="showPage('videos')"><div class="ico">🎬</div><div class="slbl" id="sc-v">VIDEOS</div><div class="sval" id="sc-vc">—</div></div>
+    <div class="scard" onclick="showPage('bracket')"><div class="ico">🏆</div><div class="slbl" id="sc-b">BRACKET</div><div class="sval">March Madness</div></div>
   </div>
 </div>
 
-<!-- VIDEOS -->
+<!-- ══ VIDEOS ══ -->
 <div class="page" id="pg-videos">
   <div class="shdr"><h2 id="vh2">VIDEOS</h2></div>
   <div id="vid-out"><div class="spin">Loading...</div></div>
 </div>
 
-<!-- BRACKET -->
+<!-- ══ BRACKET ══ -->
 <div class="page" id="pg-bracket">
-  <div class="shdr">
-    <h2 id="bh2">BRACKET</h2>
-    <span id="b-badge"></span>
-  </div>
+  <div class="shdr"><h2 id="bh2">BRACKET</h2></div>
+  <div class="btabs" id="b-tabs"></div>
   <div class="bleg">
-    <span><div class="bdot" style="background:var(--g4);border:1px solid var(--g3);"></div> <span id="leg-open">Open</span></span>
-    <span><div class="bdot" style="background:#ffaa0044;border:1px solid var(--warn);"></div> <span id="leg-pend">Pending</span></span>
-    <span><div class="bdot" style="background:#333;border:1px solid #555;"></div> <span id="leg-cls">Closed</span></span>
+    <span><div class="bdot" style="background:var(--g4);border:1px solid var(--g3);"></div><span id="leg-o">Voting open</span></span>
+    <span><div class="bdot" style="background:#ffaa0044;border:1px solid var(--warn);"></div><span id="leg-p">Pending</span></span>
+    <span><div class="bdot" style="background:#333;border:1px solid #555;"></div><span id="leg-c">Closed</span></span>
   </div>
-  <div class="bouter">
-    <div id="b-out"><div class="spin">Loading...</div></div>
-  </div>
+  <div class="bouter"><div id="b-out"><div class="spin">Loading...</div></div></div>
 </div>
 
-<!-- TEACHER -->
+<!-- ══ TEACHER PANEL ══ -->
 <div class="page" id="pg-teacher">
-  <div class="shdr"><h2 id="tph2">🎓 PANEL</h2><span class="bdg tch">TEACHER</span></div>
+  <div class="shdr"><h2>🎓 PANEL</h2><span class="bdg tch">TEACHER</span></div>
   <div class="tpgrid">
     <div class="tpsidebar">
       <div class="tpstitle">MENU</div>
-      <button class="tpitem on" onclick="tpNav(this,'tps-bracket')" id="tpi-bracket">🏆 Bracket</button>
-      <button class="tpitem" onclick="tpNav(this,'tps-songs')"   id="tpi-songs">🎵 Songs Pool</button>
-      <button class="tpitem" onclick="tpNav(this,'tps-videos')"  id="tpi-videos">🎬 Videos</button>
-      <button class="tpitem" onclick="tpNav(this,'tps-votes')"   id="tpi-votes">📊 Votes</button>
-      <button class="tpitem" onclick="tpNav(this,'tps-account')" id="tpi-acct">👤 Account</button>
+      <button class="tpitem on" onclick="tpNav(this,'tps-bracket')">🏆 Bracket</button>
+      <button class="tpitem" onclick="tpNav(this,'tps-songs')">🎵 Songs</button>
+      <button class="tpitem" onclick="tpNav(this,'tps-videos')">🎬 Videos</button>
+      <button class="tpitem" onclick="tpNav(this,'tps-votes')">📊 Votes</button>
+      <button class="tpitem" onclick="tpNav(this,'tps-users')">👥 Users</button>
+      <button class="tpitem" onclick="tpNav(this,'tps-account')">👤 Account</button>
     </div>
     <div class="tpcontent">
 
-      <!-- TP: BRACKET -->
+      <!-- BRACKET MGR -->
       <div class="tpsec on" id="tps-bracket">
         <h3>🏆 BRACKET MANAGER</h3>
         <div class="brow">
@@ -327,51 +321,77 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
         <div id="tp-bed"><div class="spin">Loading...</div></div>
       </div>
 
-      <!-- TP: SONGS -->
+      <!-- SONGS -->
       <div class="tpsec" id="tps-songs">
-        <h3 id="tph-songs">🎵 SONGS POOL</h3>
+        <h3>🎵 SONGS POOL</h3>
         <div class="brow"><button class="bsm gn" onclick="openM('m-addsong')">+ Add Song</button></div>
         <div id="tp-slist"><div class="spin">Loading...</div></div>
       </div>
 
-      <!-- TP: VIDEOS -->
+      <!-- VIDEOS -->
       <div class="tpsec" id="tps-videos">
-        <h3 id="tph-videos">🎬 VIDEOS</h3>
+        <h3>🎬 VIDEOS</h3>
         <div class="brow"><button class="bsm gn" onclick="openM('m-addvid')">+ Add Video</button></div>
         <div id="tp-vlist"><div class="spin">Loading...</div></div>
       </div>
 
-      <!-- TP: VOTES -->
+      <!-- VOTES -->
       <div class="tpsec" id="tps-votes">
-        <h3>📊 VOTE RESULTS (TEACHER ONLY)</h3>
+        <h3>📊 VOTE RESULTS</h3>
+        <div class="brow">
+          <button class="bsm rd" onclick="tpResetAllVotes()">Reset ALL Votes</button>
+        </div>
         <div id="tp-votes-out"><div class="spin">Loading...</div></div>
       </div>
 
-      <!-- TP: ACCOUNT -->
+      <!-- USERS -->
+      <div class="tpsec" id="tps-users">
+        <h3>👥 USER MANAGEMENT</h3>
+        <div id="tp-users-out"><div class="spin">Loading...</div></div>
+      </div>
+
+      <!-- ACCOUNT -->
       <div class="tpsec" id="tps-account">
         <h3>👤 ACCOUNT</h3>
         <div style="background:var(--dim);border:var(--bdr);padding:.9rem;font-size:.85rem;margin-bottom:.9rem;">
-          <p style="color:var(--muted);font-size:.68rem;letter-spacing:2px;margin-bottom:.25rem;">USERNAME</p>
+          <p style="color:var(--muted);font-size:.68rem;letter-spacing:2px;margin-bottom:.25rem;">LOGGED IN AS</p>
           <p style="font-family:'Orbitron',monospace;color:var(--g3);" id="tp-uname">—</p>
           <span class="bdg tch" style="margin-top:.45rem;display:inline-block;">TEACHER</span>
         </div>
-        <div style="background:var(--dim);border:var(--bdr);padding:.85rem;font-size:.78rem;color:var(--muted);line-height:1.6;">
-          Manage users: Supabase Dashboard → Authentication → Users<br>
-          Promote to teacher: <code style="background:var(--g2);padding:1px 4px;font-size:.75rem;">UPDATE profiles SET is_teacher=true WHERE username='NAME';</code>
-        </div>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- MODALS -->
+<!-- ══════ MODALS ══════ -->
+
+<!-- Teacher Setup -->
+<div class="mbg" id="m-teacher-setup">
+  <div class="mbox">
+    <button class="mclose" onclick="closeM('m-teacher-setup')">✕</button>
+    <h3>🎓 TEACHER SETUP</h3>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6;">Sign up first, then enter your username + the secret code to get teacher access.</p>
+    <div class="fr"><label>Username to promote</label><input type="text" id="mt-u" placeholder="your username"></div>
+    <div class="fr"><label>Secret Code</label><input type="password" id="mt-c" placeholder="Teacher code"></div>
+    <div class="amsg" id="mt-msg"></div>
+    <div class="mact">
+      <button class="bsm" onclick="closeM('m-teacher-setup')">Cancel</button>
+      <button class="bsm gn" onclick="makeTeacher()">Make Teacher</button>
+    </div>
+    <div style="margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--g2);font-size:.74rem;color:var(--muted);line-height:1.7;">
+      <strong style="color:var(--text);">Or run in Supabase SQL Editor:</strong><br>
+      <code style="background:var(--g2);padding:2px 5px;font-size:.72rem;">UPDATE profiles SET is_teacher=true WHERE username='YOUR_NAME';</code>
+    </div>
+  </div>
+</div>
+
+<!-- New Bracket -->
 <div class="mbg" id="m-addbracket">
   <div class="mbox">
     <button class="mclose" onclick="closeM('m-addbracket')">✕</button>
     <h3>+ NEW BRACKET</h3>
-    <div class="fr"><label>Bracket Name (EN)</label><input type="text" id="ab-name" placeholder="e.g. Spring 2025"></div>
-    <div class="fr"><label>Nom (FR)</label><input type="text" id="ab-name-fr" placeholder="ex. Printemps 2025"></div>
+    <div class="fr"><label>Name (EN)</label><input type="text" id="ab-name" placeholder="e.g. Manie Musicale 2026"></div>
+    <div class="fr"><label>Nom (FR)</label><input type="text" id="ab-fr" placeholder="ex. Manie Musicale 2026"></div>
     <div class="mact">
       <button class="bsm" onclick="closeM('m-addbracket')">Cancel</button>
       <button class="bsm gn" onclick="addBracket()">Create</button>
@@ -379,6 +399,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
   </div>
 </div>
 
+<!-- Add Match -->
 <div class="mbg" id="m-addmatch">
   <div class="mbox">
     <button class="mclose" onclick="closeM('m-addmatch')">✕</button>
@@ -409,6 +430,7 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
   </div>
 </div>
 
+<!-- Edit Match -->
 <div class="mbg" id="m-editmatch">
   <div class="mbox">
     <button class="mclose" onclick="closeM('m-editmatch')">✕</button>
@@ -429,14 +451,15 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
   </div>
 </div>
 
+<!-- Add Song -->
 <div class="mbg" id="m-addsong">
   <div class="mbox">
     <button class="mclose" onclick="closeM('m-addsong')">✕</button>
     <h3>+ ADD SONG</h3>
     <div class="fr"><label>Title (EN)</label><input type="text" id="as-title" placeholder="Song title"></div>
-    <div class="fr"><label>Titre (FR)</label><input type="text" id="as-title-fr" placeholder="Titre en français"></div>
+    <div class="fr"><label>Titre (FR)</label><input type="text" id="as-fr" placeholder="Titre en français"></div>
     <div class="fr"><label>Artist</label><input type="text" id="as-artist" placeholder="Artist name"></div>
-    <div class="fr"><label>YouTube ID/URL (optional)</label><input type="text" id="as-yt" placeholder="YouTube URL or ID"></div>
+    <div class="fr"><label>YouTube ID/URL</label><input type="text" id="as-yt" placeholder="YouTube URL or ID"></div>
     <div class="mact">
       <button class="bsm" onclick="closeM('m-addsong')">Cancel</button>
       <button class="bsm gn" onclick="submitAddSong()">Add</button>
@@ -444,12 +467,13 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
   </div>
 </div>
 
+<!-- Add Video -->
 <div class="mbg" id="m-addvid">
   <div class="mbox">
     <button class="mclose" onclick="closeM('m-addvid')">✕</button>
     <h3>+ ADD VIDEO</h3>
     <div class="fr"><label>Title (EN)</label><input type="text" id="av-title" placeholder="Video title"></div>
-    <div class="fr"><label>Titre (FR)</label><input type="text" id="av-title-fr" placeholder="Titre en français"></div>
+    <div class="fr"><label>Titre (FR)</label><input type="text" id="av-fr" placeholder="Titre en français"></div>
     <div class="fr"><label>YouTube ID or URL</label><input type="text" id="av-yt" placeholder="https://youtube.com/... or ID"></div>
     <div class="fr"><label>Category</label><input type="text" id="av-cat" placeholder="Song, Clip, Lesson..."></div>
     <div class="fr"><label>Description</label><textarea id="av-desc" rows="2" placeholder="Optional"></textarea></div>
@@ -460,13 +484,14 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
   </div>
 </div>
 
+<!-- Edit Video -->
 <div class="mbg" id="m-editvid">
   <div class="mbox">
     <button class="mclose" onclick="closeM('m-editvid')">✕</button>
     <h3>EDIT VIDEO</h3>
     <input type="hidden" id="ev-id">
     <div class="fr"><label>Title (EN)</label><input type="text" id="ev-title"></div>
-    <div class="fr"><label>Titre (FR)</label><input type="text" id="ev-title-fr"></div>
+    <div class="fr"><label>Titre (FR)</label><input type="text" id="ev-fr"></div>
     <div class="fr"><label>YouTube ID</label><input type="text" id="ev-yt"></div>
     <div class="fr"><label>Category</label><input type="text" id="ev-cat"></div>
     <div class="fr"><label>Description</label><textarea id="ev-desc" rows="2"></textarea></div>
@@ -477,175 +502,161 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
   </div>
 </div>
 
-<!-- load supabase then run everything -->
+<!-- ══════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════ -->
 <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
-// ══════════════════════════════════════
-//  CONFIGURE THESE
+// ═══════════════════════════════════════
+//   CONFIGURE THESE TWO VALUES
 const SUPABASE_URL      = 'https://jxcpsgiptutnxnnrvcwr.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4Y3BzZ2lwdHV0bnhubnJ2Y3dyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNTA3OTAsImV4cCI6MjA5MDcyNjc5MH0.oD_KvrNy-Vx6pWjvVcUFpWNqx0jo4NaAuF9TKbenA5Y';
-// ══════════════════════════════════════
+// ═══════════════════════════════════════
 
-if(typeof supabase === 'undefined'){
-  document.body.innerHTML = '<div style="color:#ff4455;font-family:monospace;padding:2rem;background:#000;min-height:100vh;">❌ Supabase failed to load.<br><br>Make sure you are opening this file from a web server (not directly from your file system), or have an internet connection for the CDN.<br><br>If running locally, use: <code>npx serve .</code> or upload the file to your hosting.</div>';
-  throw new Error('Supabase CDN failed to load');
+if(typeof supabase==='undefined'){
+  document.body.innerHTML='<div style="color:#ff4455;font-family:monospace;padding:2rem;background:#000;min-height:100vh;">❌ Supabase failed to load. Open this file via a web server, not directly from your file system.<br><br>Use: <code>npx serve .</code></div>';
+  throw new Error('Supabase not loaded');
 }
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ── STATE ──────────────────────────────────────────────────
-let lang          = 'en';
-let authMode      = 'login';
-let currentUser   = null;
-let currentProfile= null;
-let isTeacher     = false;
-let myVotes       = {};      // matchupId -> 'a'|'b'
-let allSongs      = [];
-let tpBrackets    = [];
-let tpActiveBid   = null;
-let tpMatchups    = [];
-let amPickA = null, amPickB = null;
-let emPickA = null, emPickB = null;
+// ── STATE ──────────────────────────────
+let lang='en', authMode='login';
+let currentUser=null, currentProfile=null, isTeacher=false;
+let myVotes={};        // matchupId -> 'a'|'b'
+let allSongs=[];
+let tpBrackets=[], tpActiveBid=null, tpMatchups=[];
+let amPickA=null, amPickB=null, emPickA=null, emPickB=null;
+let viewingBracketId=null; // which bracket is shown on bracket page
+let realtimeSub=null;
 
-// ── TRANSLATIONS ────────────────────────────────────────────
-const TX = {
-  en:{
-    home:'Home', videos:'Videos', bracket:'Bracket', logout:'Logout',
-    signin:'SIGN IN', signup:'SIGN UP', login:'LOGIN', register:'REGISTER',
-    noaccount:'No account?', haveaccount:'Have an account?',
-    novideos:'No videos yet.', nobracket:'No bracket active.',
-    novotes:'No votes yet.', nosongspool:'No songs in pool.',
-    confirmdelete:'Delete this? This cannot be undone.',
-    openleg:'Voting open', pendleg:'Pending', closedleg:'Closed',
-    startvoting:'Start Voting', closevoting:'Stop & Advance Winner', edit:'Edit', delete:'Delete',
-    err_fields:'Please fill in all required fields.',
-    err_user:'Username must be at least 3 characters.',
-    err_taken:'Username is already taken.',
-  },
-  fr:{
-    home:'Accueil', videos:'Vidéos', bracket:'Bracket', logout:'Déconnexion',
-    signin:'SE CONNECTER', signup:"S'INSCRIRE", login:'CONNEXION', register:"S'INSCRIRE",
-    noaccount:'Pas de compte?', haveaccount:'Déjà un compte?',
-    novideos:'Aucune vidéo.', nobracket:'Aucun bracket actif.',
-    novotes:'Aucun vote.', nosongspool:'Aucune chanson.',
-    confirmdelete:'Supprimer? Action irréversible.',
-    openleg:'Vote ouvert', pendleg:'En attente', closedleg:'Fermé',
-    startvoting:'Démarrer vote', closevoting:'Arrêter & Avancer', edit:'Modifier', delete:'Supprimer',
-    err_fields:'Remplissez tous les champs.',
-    err_user:"Nom d'utilisateur: 3+ caractères.",
-    err_taken:"Nom d'utilisateur déjà pris.",
-  }
+// ── TRANSLATIONS ──────────────────────
+const TX={
+  en:{home:'Home',videos:'Videos',bracket:'Bracket',logout:'Logout',
+      signin:'SIGN IN',signup:'SIGN UP',login:'LOGIN',
+      noaccount:'No account?',haveaccount:'Have an account?',
+      novideos:'No videos yet.',nobracket:'No active bracket.',
+      novotes:'No votes yet.',nosongspool:'No songs in pool.',
+      confirmdelete:'Delete? This cannot be undone.',
+      openleg:'Voting open',pendleg:'Pending',closedleg:'Closed',
+      startvoting:'Start Voting',closevoting:'Stop & Advance',
+      edit:'Edit',delete:'Delete',resetvotes:'Reset Votes',
+      err_fields:'Fill in all required fields.',
+      err_user:'Username must be 3+ characters.',
+      err_taken:'Username already taken.',
+      active:'Active',inactive:'Inactive',setactive:'Set Active',
+      allbrackets:'All Brackets',activebracket:'★ Active'},
+  fr:{home:'Accueil',videos:'Vidéos',bracket:'Bracket',logout:'Déconnexion',
+      signin:'SE CONNECTER',signup:"S'INSCRIRE",login:'CONNEXION',
+      noaccount:'Pas de compte?',haveaccount:'Déjà un compte?',
+      novideos:'Aucune vidéo.',nobracket:'Aucun bracket actif.',
+      novotes:'Aucun vote.',nosongspool:'Aucune chanson.',
+      confirmdelete:'Supprimer? Action irréversible.',
+      openleg:'Vote ouvert',pendleg:'En attente',closedleg:'Fermé',
+      startvoting:'Démarrer vote',closevoting:'Arrêter & Avancer',
+      edit:'Modifier',delete:'Supprimer',resetvotes:'Réinitialiser',
+      err_fields:'Remplissez tous les champs.',
+      err_user:"3+ caractères requis.",
+      err_taken:"Nom d'utilisateur déjà pris.",
+      active:'Actif',inactive:'Inactif',setactive:'Activer',
+      allbrackets:'Tous les Brackets',activebracket:'★ Actif'}
 };
-function tx(k){ return (TX[lang]||TX.en)[k] || k; }
+const tx=k=>(TX[lang]||TX.en)[k]||k;
 
-// ── LANGUAGE ────────────────────────────────────────────────
+// ── LANGUAGE ──────────────────────────
 function setLang(l){
-  lang = l;
-  document.getElementById('btn-en').classList.toggle('on', l==='en');
-  document.getElementById('btn-fr').classList.toggle('on', l==='fr');
+  lang=l;
+  document.getElementById('btn-en').classList.toggle('on',l==='en');
+  document.getElementById('btn-fr').classList.toggle('on',l==='fr');
   applyLang();
 }
 function applyLang(){
-  // nav buttons
-  document.getElementById('nb-home').textContent    = tx('home');
-  document.getElementById('nb-videos').textContent  = tx('videos');
-  document.getElementById('nb-bracket').textContent = tx('bracket');
-  document.getElementById('logoutbtn').textContent  = tx('logout');
-  // login page
-  document.getElementById('ltitle').textContent    = tx('login');
-  document.getElementById('lbl-uname').textContent = authMode==='login'?'Username':'Username';
-  document.getElementById('lbl-pass').textContent  = 'Password';
-  document.getElementById('authbtn').textContent   = authMode==='login'?tx('signin'):tx('signup');
-  document.getElementById('tog-txt').textContent   = authMode==='login'?tx('noaccount'):tx('haveaccount');
-  document.getElementById('tog-lnk').textContent   = authMode==='login'?tx('register'):tx('login');
-  // page headings
-  const vh2 = document.getElementById('vh2');
-  if(vh2) vh2.textContent = tx('videos');
-  const bh2 = document.getElementById('bh2');
-  if(bh2) bh2.textContent = tx('bracket');
-  // legend
-  const lo=document.getElementById('leg-open'); if(lo) lo.textContent=tx('openleg');
-  const lp=document.getElementById('leg-pend'); if(lp) lp.textContent=tx('pendleg');
-  const lc=document.getElementById('leg-cls');  if(lc) lc.textContent=tx('closedleg');
-  // hero
-  document.getElementById('hero-sub').textContent = lang==='fr'?'BIENVENUE · LA MUSIQUE EN FOLIE':'WELCOME · LA MUSIQUE EN FOLIE';
-  document.getElementById('sc-videos').textContent  = tx('videos').toUpperCase();
-  document.getElementById('sc-bracket').textContent = tx('bracket').toUpperCase();
-  // ticker
-  document.querySelector('.ticker-track').innerHTML =
-    `<span>🎵 MANIE MUSICALE</span><span>⭐ ${lang==='fr'?'VOTEZ POUR VOTRE CHANSON':'VOTE FOR YOUR SONG'}</span><span>🏆 MARCH MADNESS</span><span>🎬 ${lang==='fr'?'REGARDEZ LES VIDÉOS':'WATCH VIDEOS'}</span>`.repeat(2);
+  document.getElementById('nb-home').textContent=tx('home');
+  document.getElementById('nb-videos').textContent=tx('videos');
+  document.getElementById('nb-bracket').textContent=tx('bracket');
+  document.getElementById('logoutbtn').textContent=tx('logout');
+  document.getElementById('ltitle').textContent=tx('login');
+  document.getElementById('authbtn').textContent=authMode==='login'?tx('signin'):tx('signup');
+  document.getElementById('tog-txt').textContent=authMode==='login'?tx('noaccount'):tx('haveaccount');
+  document.getElementById('tog-lnk').textContent=authMode==='login'?'Register':'Sign In';
+  document.getElementById('hero-sub').textContent=lang==='fr'?'BIENVENUE · LA MUSIQUE EN FOLIE':'WELCOME · LA MUSIQUE EN FOLIE';
+  document.getElementById('sc-v').textContent=tx('videos').toUpperCase();
+  document.getElementById('sc-b').textContent=tx('bracket').toUpperCase();
+  const lo=document.getElementById('leg-o');if(lo)lo.textContent=tx('openleg');
+  const lp=document.getElementById('leg-p');if(lp)lp.textContent=tx('pendleg');
+  const lc=document.getElementById('leg-c');if(lc)lc.textContent=tx('closedleg');
+  const tt=document.getElementById('ticker-track');
+  if(tt) tt.innerHTML=`<span>🎵 MANIE MUSICALE</span><span>⭐ ${lang==='fr'?'VOTEZ POUR VOTRE CHANSON':'VOTE FOR YOUR SONG'}</span><span>🏆 MARCH MADNESS</span><span>🎬 ${lang==='fr'?'LES VIDÉOS':'WATCH VIDEOS'}</span>`.repeat(2);
 }
 
-// ── UTILS ───────────────────────────────────────────────────
-function ytId(s){
-  if(!s) return '';
-  const m = s.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
-  return m ? m[1] : s.trim();
-}
-function fakeEmail(u){ return u.toLowerCase().trim()+'@maniemusicale.internal'; }
-function songLabel(s){ return (lang==='fr'&&s.title_fr ? s.title_fr : s.title) + (s.artist?' — '+s.artist:''); }
-function showAmsg(txt,type='err'){
-  const el=document.getElementById('amsg');
-  el.className='amsg '+type; el.textContent=txt; el.style.display=txt?'block':'none';
-}
-function openM(id){ document.getElementById(id).classList.add('on'); }
-function closeM(id){ document.getElementById(id).classList.remove('on'); }
-document.querySelectorAll('.mbg').forEach(bg=>{
-  bg.addEventListener('click', e=>{ if(e.target===bg) bg.classList.remove('on'); });
-});
+// ── UTILS ─────────────────────────────
+function ytId(s){if(!s)return'';const m=s.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);return m?m[1]:s.trim();}
+function fakeEmail(u){return u.toLowerCase().trim()+'@maniemusicale.internal';}
+function songLabel(s){return(lang==='fr'&&s.title_fr?s.title_fr:s.title)+(s.artist?' — '+s.artist:'');}
+function showAmsg(txt,type='err'){const el=document.getElementById('amsg');el.className='amsg '+type;el.textContent=txt;el.style.display=txt?'block':'none';}
+function openM(id){document.getElementById(id).classList.add('on');}
+function closeM(id){document.getElementById(id).classList.remove('on');}
+document.querySelectorAll('.mbg').forEach(bg=>bg.addEventListener('click',e=>{if(e.target===bg)bg.classList.remove('on');}));
 
-// ── AUTH ─────────────────────────────────────────────────────
+// Vote toast
+function showToast(msg){
+  const t=document.getElementById('vote-toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// ── AUTH ──────────────────────────────
 function toggleMode(){
-  authMode = authMode==='login'?'register':'login';
-  applyLang();
-  showAmsg('');
+  authMode=authMode==='login'?'register':'login';
+  applyLang(); showAmsg('');
 }
 
 async function doAuth(){
-  const uname = (document.getElementById('inp-uname').value||'').trim().toLowerCase();
-  const pass  = (document.getElementById('inp-pass').value||'');
-  if(!uname||!pass){ showAmsg(tx('err_fields')); return; }
-  if(uname.length<3){ showAmsg(tx('err_user')); return; }
-  const btn = document.getElementById('authbtn');
+  const u=(document.getElementById('inp-u').value||'').trim().toLowerCase();
+  const p=(document.getElementById('inp-p').value||'');
+  if(!u||!p){showAmsg(tx('err_fields'));return;}
+  if(u.length<3){showAmsg(tx('err_user'));return;}
+  const btn=document.getElementById('authbtn');
   btn.disabled=true; btn.textContent='...';
 
   if(authMode==='register'){
-    const {data:exist} = await sb.from('profiles').select('id').eq('username',uname).maybeSingle();
-    if(exist){ btn.disabled=false; btn.textContent=tx('signup'); showAmsg(tx('err_taken')); return; }
-    const {data,error} = await sb.auth.signUp({email:fakeEmail(uname),password:pass});
-    if(error){ btn.disabled=false; btn.textContent=tx('signup'); showAmsg(error.message); return; }
-    if(data.user){
-      await sb.from('profiles').insert({id:data.user.id,username:uname,is_teacher:false});
-    }
-    btn.disabled=false; btn.textContent=tx('signup');
+    const {data:ex}=await sb.from('profiles').select('id').eq('username',u).maybeSingle();
+    if(ex){btn.disabled=false;btn.textContent=tx('signup');showAmsg(tx('err_taken'));return;}
+    const {data,error}=await sb.auth.signUp({email:fakeEmail(u),password:p});
+    if(error){btn.disabled=false;btn.textContent=tx('signup');showAmsg(error.message);return;}
+    if(data.user) await sb.from('profiles').insert({id:data.user.id,username:u,is_teacher:false});
+    btn.disabled=false;btn.textContent=tx('signup');
     showAmsg(lang==='fr'?'Compte créé! Connectez-vous.':'Account created! Sign in now.','ok');
-    authMode='login'; applyLang(); return;
+    authMode='login';applyLang();return;
   }
 
-  const {data,error} = await sb.auth.signInWithPassword({email:fakeEmail(uname),password:pass});
-  btn.disabled=false; btn.textContent=tx('signin');
-  if(error){ showAmsg(error.message); return; }
+  const {data,error}=await sb.auth.signInWithPassword({email:fakeEmail(u),password:p});
+  btn.disabled=false;btn.textContent=tx('signin');
+  if(error){showAmsg(error.message);return;}
   await onLogin(data.user);
 }
 
 async function onLogin(user){
-  currentUser = user;
-  const {data:prof} = await sb.from('profiles').select('*').eq('id',user.id).single();
-  currentProfile = prof;
-  isTeacher = !!(prof&&prof.is_teacher);
-  document.getElementById('ubadge').textContent = prof?prof.username:user.email;
+  currentUser=user;
+  const {data:prof}=await sb.from('profiles').select('*').eq('id',user.id).single();
+  currentProfile=prof;
+  isTeacher=!!(prof&&prof.is_teacher);
+  document.getElementById('ubadge').textContent=prof?prof.username:user.email;
   document.getElementById('ubadge').style.display='block';
   document.getElementById('logoutbtn').style.display='block';
   document.getElementById('navmid').style.display='flex';
   if(isTeacher) document.getElementById('nb-teacher').style.display='block';
-  // load my votes
-  const {data:vd} = await sb.from('votes').select('matchup_id,choice').eq('user_id',user.id);
-  if(vd) vd.forEach(v=>{ myVotes[v.matchup_id]=v.choice; });
+  // load existing votes
+  const {data:vd}=await sb.from('votes').select('matchup_id,choice').eq('user_id',user.id);
+  if(vd) vd.forEach(v=>{myVotes[v.matchup_id]=v.choice;});
+  // subscribe to realtime votes for toast
+  subscribeVotes();
   showPage('home');
 }
 
 async function doLogout(){
+  if(realtimeSub) sb.removeChannel(realtimeSub);
   await sb.auth.signOut();
-  currentUser=null; currentProfile=null; isTeacher=false; myVotes={};
+  currentUser=null;currentProfile=null;isTeacher=false;myVotes={};
   document.getElementById('ubadge').style.display='none';
   document.getElementById('logoutbtn').style.display='none';
   document.getElementById('navmid').style.display='none';
@@ -653,104 +664,114 @@ async function doLogout(){
   showPage('login');
 }
 
-async function makeTeacher(){
-  const uname  = (document.getElementById('mt-uname').value||'').trim().toLowerCase();
-  const code   = (document.getElementById('mt-code').value||'').trim();
-  const msgEl  = document.getElementById('mt-msg');
-  msgEl.style.display='none';
-
-  if(!uname){ msgEl.className='amsg err'; msgEl.textContent='Enter a username.'; msgEl.style.display='block'; return; }
-  if(code !== 'maniemusicaleteacher'){
-    msgEl.className='amsg err'; msgEl.textContent='Wrong code.'; msgEl.style.display='block'; return;
-  }
-
-  // Check profile exists
-  const {data:prof, error:fetchErr} = await sb.from('profiles').select('id,username,is_teacher').eq('username',uname).maybeSingle();
-  if(fetchErr||!prof){
-    msgEl.className='amsg err';
-    msgEl.textContent='Username "'+uname+'" not found. Sign up first, then come back here.';
-    msgEl.style.display='block'; return;
-  }
-  if(prof.is_teacher){
-    msgEl.className='amsg ok';
-    msgEl.textContent=uname+' is already a teacher!';
-    msgEl.style.display='block'; return;
-  }
-
-  // Update via RPC to bypass RLS (uses security definer)
-  const {error:upErr} = await sb.rpc('promote_teacher', {p_username: uname, p_code: code});
-  if(upErr){
-    // fallback: direct update (works if already a teacher or RLS allows)
-    const {error:upErr2} = await sb.from('profiles').update({is_teacher:true}).eq('username',uname);
-    if(upErr2){
-      msgEl.className='amsg err';
-      msgEl.textContent='Could not promote. Run this in Supabase SQL Editor: UPDATE profiles SET is_teacher=true WHERE username=\''+uname+'\';';
-      msgEl.style.display='block'; return;
-    }
-  }
-
-  msgEl.className='amsg ok';
-  msgEl.textContent='✓ '+uname+' is now a teacher! Sign in to see the 🎓 Panel.';
-  msgEl.style.display='block';
-  document.getElementById('mt-uname').value='';
-  document.getElementById('mt-code').value='';
+// ── REALTIME VOTE TOASTS ──────────────
+function subscribeVotes(){
+  if(realtimeSub) sb.removeChannel(realtimeSub);
+  realtimeSub=sb.channel('votes-feed')
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'votes'},async(payload)=>{
+      const vid=payload.new?.user_id;
+      if(!vid) return;
+      const {data:prof}=await sb.from('profiles').select('username').eq('id',vid).single();
+      const uname=prof?.username||'Someone';
+      showToast('⭐ '+uname+' just voted!');
+    })
+    .subscribe();
 }
 
-// auto restore session
+// Session restore
 (async()=>{
   try{
-    const {data} = await sb.auth.getSession();
-    if(data && data.session && data.session.user){
+    const {data}=await sb.auth.getSession();
+    if(data&&data.session&&data.session.user){
       await onLogin(data.session.user);
     } else {
       showPage('login');
     }
   } catch(e){
-    console.warn('session restore:',e);
+    console.warn('session:',e);
     showPage('login');
   } finally {
-    const splash = document.getElementById('splash');
-    if(splash) splash.remove();
+    const s=document.getElementById('splash');
+    if(s) s.remove();
   }
 })();
 
-// ── NAVIGATION ───────────────────────────────────────────────
+// ── NAVIGATION ────────────────────────
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
   document.getElementById('pg-'+name).classList.add('on');
   if(name==='home')    loadStats();
   if(name==='videos')  loadVideos();
-  if(name==='bracket') loadBracket();
-  if(name==='teacher'){ tpLoadBracket(); tpLoadSongs(); tpLoadVideos(); if(currentProfile) document.getElementById('tp-uname').textContent=currentProfile.username; }
+  if(name==='bracket') loadBracketPage();
+  if(name==='teacher'){
+    tpLoadBracket();tpLoadSongs();tpLoadVideos();
+    if(currentProfile) document.getElementById('tp-uname').textContent=currentProfile.username;
+  }
 }
 
-function tpNav(btn, sec){
+function tpNav(btn,sec){
   document.querySelectorAll('.tpitem').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('.tpsec').forEach(s=>s.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById(sec).classList.add('on');
-  if(sec==='tps-votes')  tpLoadVotes();
-  if(sec==='tps-songs')  tpLoadSongs();
+  if(sec==='tps-votes') tpLoadVotes();
+  if(sec==='tps-songs') tpLoadSongs();
   if(sec==='tps-videos') tpLoadVideos();
   if(sec==='tps-bracket') tpLoadBracket();
+  if(sec==='tps-users') tpLoadUsers();
 }
 
-// ── HOME ─────────────────────────────────────────────────────
+// ── HOME ──────────────────────────────
 async function loadStats(){
-  const {count} = await sb.from('videos').select('id',{count:'exact',head:true});
-  document.getElementById('sc-vcount').textContent = (count||0)+' clips';
+  const {count}=await sb.from('videos').select('id',{count:'exact',head:true});
+  document.getElementById('sc-vc').textContent=(count||0)+' clips';
 }
 
-// ── VIDEOS ───────────────────────────────────────────────────
+// ── VIDEOS ────────────────────────────
+// 16 Manie Musicale 2026 songs hardcoded as videos
+const MANIE_SONGS=[
+  {title:'Toucher la lune',artist:'Maheva',yt:'DenfiN2CUtI'},
+  {title:'Extraordinaire',artist:'Fredz',yt:'hqnLMQRbLbs'},
+  {title:'Je rentre à la maison',artist:'Boulevard des Airs',yt:'bPlCEpDFTHw'},
+  {title:'No Fear',artist:'Saël & YaniSs Odua',yt:'QWp4ZjS5aPs'},
+  {title:'Aussi simple que toi',artist:'Lenaïg',yt:'iyTY7_1Lz0k'},
+  {title:'Nouici',artist:'Jyeuhair',yt:'VX0MaUfwGVs'},
+  {title:'Afro beauté',artist:'Eloïsha Iza',yt:'kCFMGJBtPfk'},
+  {title:'Et si',artist:'Billie du Page',yt:'tgHxFRVQ8jU'},
+  {title:'Chapeau',artist:'Port-Aux-Poutines',yt:'AQXhxlzNxPs'},
+  {title:'Monde parallèle',artist:'Richy Jay',yt:'YE4iqduTL9I'},
+  {title:'Ton visage',artist:'MPL',yt:'v0l9_JJa8N4'},
+  {title:"La vie qu'on mène",artist:'Mentissa',yt:'3u9JDFvhaXM'},
+  {title:"Peur d'y croire",artist:'Charlie Oz',yt:'D8tFQcYkzlE'},
+  {title:'Le musée imaginaire',artist:'Oli',yt:'nNQqerHJFYs'},
+  {title:'Demain demain',artist:'Luiza',yt:'hYGsOW_CGUA'},
+  {title:'Jamais oublier',artist:'Kelly Bado',yt:'N1SkaXPrjv8'}
+];
+
 async function loadVideos(){
   const el=document.getElementById('vid-out');
   el.innerHTML='<div class="spin">Loading...</div>';
-  const {data} = await sb.from('videos').select('*').order('created_at',{ascending:false});
-  if(!data||!data.length){ el.innerHTML=`<div class="empty"><div class="ico">🎬</div><p>${tx('novideos')}</p></div>`; return; }
-  el.innerHTML='<div class="vgrid">'+data.map(v=>{
+  // Load from DB first, then append Manie songs not already there
+  const {data:dbVids}=await sb.from('videos').select('*').order('created_at',{ascending:false});
+  const vids=dbVids||[];
+
+  // Build combined list: DB videos + Manie songs (deduplicated by yt id)
+  const dbYtIds=new Set(vids.map(v=>ytId(v.youtube_id)));
+  const manieSongs=MANIE_SONGS.filter(s=>!dbYtIds.has(s.yt));
+
+  if(!vids.length&&!manieSongs.length){
+    el.innerHTML=`<div class="empty"><div class="ico">🎬</div><p>${tx('novideos')}</p></div>`;return;
+  }
+
+  const allVids=[
+    ...manieSongs.map(s=>({title:s.title,youtube_id:s.yt,description:s.artist,category:'🎵 2026',_manie:true})),
+    ...vids
+  ];
+
+  el.innerHTML='<div class="vgrid">'+allVids.map(v=>{
     const id=ytId(v.youtube_id);
     const title=lang==='fr'&&v.title_fr?v.title_fr:v.title;
-    const desc=lang==='fr'&&v.description_fr?v.description_fr:(v.description||v.category||'');
+    const desc=v.description||(v.category||'');
     return `<div class="vcard">
       <div class="vthumb" onclick="playVid(this,'${id}')">
         <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="" loading="lazy">
@@ -764,178 +785,226 @@ function playVid(thumb,id){
   thumb.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay;encrypted-media" allowfullscreen></iframe>`;
 }
 
-// ── BRACKET (public) ─────────────────────────────────────────
-const RNAMES = {
-  en:{1:'Round of 16',2:'Quarterfinals',3:'Semifinals',4:'FINAL'},
-  fr:{1:'Huitièmes',2:'Quarts',3:'Demi-finales',4:'FINALE'}
-};
+// ── BRACKET PAGE ──────────────────────
+const RNAMES={en:{1:'Round of 16',2:'Quarterfinals',3:'Semifinals',4:'FINAL'},
+              fr:{1:'Huitièmes',2:'Quarts',3:'Demi-finales',4:'FINALE'}};
+let allBrackets=[];
 
-async function loadBracket(){
+async function loadBracketPage(){
   const el=document.getElementById('b-out');
+  const tabsEl=document.getElementById('b-tabs');
   el.innerHTML='<div class="spin">Loading...</div>';
-  const {data:bks} = await sb.from('brackets').select('*').eq('is_active',true).limit(1);
-  if(!bks||!bks.length){ el.innerHTML=`<div class="empty"><div class="ico">🏆</div><p>${tx('nobracket')}</p></div>`; return; }
-  const bk=bks[0];
-  document.getElementById('b-badge').textContent = lang==='fr'&&bk.name_fr?bk.name_fr:bk.name;
-  const {data:ms} = await sb.from('matchups').select('*').eq('bracket_id',bk.id).order('round').order('position');
-  renderBracketPublic(el, ms||[]);
+  const {data:bks}=await sb.from('brackets').select('*').order('created_at',{ascending:false});
+  allBrackets=bks||[];
+  if(!allBrackets.length){
+    tabsEl.innerHTML='';
+    el.innerHTML=`<div class="empty"><div class="ico">🏆</div><p>${tx('nobracket')}</p></div>`;return;
+  }
+  // Build tabs for every bracket
+  tabsEl.innerHTML=allBrackets.map(b=>{
+    const isActive=b.is_active;
+    return `<button class="btab${isActive?' active-bracket':''}" onclick="viewBracket(${b.id})">${b.name}${isActive?' ★':''}</button>`;
+  }).join('');
+  // Default: active bracket or first
+  const def=allBrackets.find(b=>b.is_active)||allBrackets[0];
+  viewBracket(def.id);
 }
 
-function renderBracketPublic(el, ms){
-  if(!ms.length){ el.innerHTML=`<div class="empty"><div class="ico">🏆</div><p>${tx('nobracket')}</p></div>`; return; }
+async function viewBracket(bid){
+  viewingBracketId=bid;
+  // Highlight tab
+  document.querySelectorAll('.btab').forEach((t,i)=>{
+    t.classList.toggle('on',allBrackets[i]&&allBrackets[i].id===bid);
+  });
+  const el=document.getElementById('b-out');
+  el.innerHTML='<div class="spin">Loading...</div>';
+  const {data:ms}=await sb.from('matchups').select('*').eq('bracket_id',bid).order('round').order('position');
+  renderBracketPublic(el,ms||[]);
+}
+
+function renderBracketPublic(el,ms){
+  if(!ms.length){el.innerHTML=`<div class="empty"><div class="ico">🏆</div><p>No matches yet.</p></div>`;return;}
   const rounds={};
-  ms.forEach(m=>{ if(!rounds[m.round]) rounds[m.round]=[]; rounds[m.round].push(m); });
+  ms.forEach(m=>{if(!rounds[m.round])rounds[m.round]=[];rounds[m.round].push(m);});
   const rn=RNAMES[lang]||RNAMES.en;
   el.innerHTML='<div class="bracket">'+Object.keys(rounds).sort((a,b)=>+a-+b).map(r=>{
     const list=rounds[r].sort((a,b)=>a.position-b.position);
-    return `<div class="bround">
-      <div class="brname">${rn[r]||'Round '+r}</div>
-      <div class="bmatches">${list.map(m=>{
+    return `<div class="bround"><div class="brname">${rn[r]||'Round '+r}</div><div class="bmatches">
+      ${list.map(m=>{
         const tv=(m.votes_a||0)+(m.votes_b||0);
         const pa=tv?Math.round((m.votes_a/tv)*100):0;
         const pb=tv?Math.round((m.votes_b/tv)*100):0;
         const mv=myVotes[m.id];
         const canVote=m.status==='voting'&&currentUser&&!mv;
         const isClosed=m.status==='closed';
-        const aWin=m.winner==='a', bWin=m.winner==='b';
-        const showV=isTeacher; // only teacher sees vote counts
+        const aWin=m.winner==='a',bWin=m.winner==='b';
+        const showV=isTeacher;
+        const sA=m.song_a||'TBD', sB=m.song_b||'TBD';
         return `<div class="bmatch ${m.status}">
           <div class="bsong${aWin?' win':''}${isClosed&&!aWin?' lose':''}${canVote&&m.song_a?' clickable':''}${mv==='a'?' myvote':''}"
-               onclick="${canVote&&m.song_a?`castVote(${m.id},'a')`:'void 0'}">
-            <span class="snm">${m.song_a||'TBD'}</span>
+            onclick="${canVote&&m.song_a?`castVote(${m.id},'a')`:'void 0'}">
+            <span class="snm">${sA}</span>
             ${showV?`<span class="vcnt">${m.votes_a||0}v</span>`:''}
             ${m.status==='voting'?`<div class="bvbar" style="width:${pa}%"></div>`:''}
           </div>
           <div class="bsong${bWin?' win':''}${isClosed&&!bWin?' lose':''}${canVote&&m.song_b?' clickable':''}${mv==='b'?' myvote':''}"
-               onclick="${canVote&&m.song_b?`castVote(${m.id},'b')`:'void 0'}">
-            <span class="snm">${m.song_b||'TBD'}</span>
+            onclick="${canVote&&m.song_b?`castVote(${m.id},'b')`:'void 0'}">
+            <span class="snm">${sB}</span>
             ${showV?`<span class="vcnt">${m.votes_b||0}v</span>`:''}
             ${m.status==='voting'?`<div class="bvbar" style="width:${pb}%"></div>`:''}
           </div>
-          <div class="bstat">${m.status==='voting'?`<span style="color:var(--g3);">● VOTE OPEN</span>`:m.status==='closed'?`<span style="color:#444;">● CLOSED</span>`:`<span style="color:var(--warn);">● PENDING</span>`}</div>
+          <div class="bstat">${m.status==='voting'?'<span style="color:var(--g3);">● VOTE</span>':m.status==='closed'?'<span style="color:#444;">● CLOSED</span>':'<span style="color:var(--warn);">● PENDING</span>'}</div>
         </div>`;
-      }).join('')}</div>
-    </div>`;
+      }).join('')}
+    </div></div>`;
   }).join('')+'</div>';
 }
 
-async function castVote(matchupId, choice){
-  if(!currentUser){ alert('Please log in to vote.'); return; }
+async function castVote(matchupId,choice){
+  if(!currentUser){alert('Please log in to vote.');return;}
   if(myVotes[matchupId]) return;
-  const {data,error} = await sb.rpc('cast_vote',{p_matchup_id:matchupId, p_choice:choice});
-  if(error||!data||!data.ok){ alert((error&&error.message)||(data&&data.error)||'Error voting.'); return; }
+  const {data,error}=await sb.rpc('cast_vote',{p_matchup_id:matchupId,p_choice:choice});
+  if(error||!data||!data.ok){alert((error&&error.message)||(data&&data.error)||'Error.');return;}
   myVotes[matchupId]=choice;
-  loadBracket();
+  if(currentProfile) showToast('⭐ '+currentProfile.username+' just voted!');
+  viewBracket(viewingBracketId);
 }
 
-// ── TEACHER: BRACKET ─────────────────────────────────────────
+// ── TEACHER SETUP ─────────────────────
+async function makeTeacher(){
+  const u=(document.getElementById('mt-u').value||'').trim().toLowerCase();
+  const c=(document.getElementById('mt-c').value||'').trim();
+  const msg=document.getElementById('mt-msg');
+  msg.style.display='none';
+  if(!u){msg.className='amsg err';msg.textContent='Enter username.';msg.style.display='block';return;}
+  if(c!=='maniemusicaleteacher'){msg.className='amsg err';msg.textContent='Wrong code.';msg.style.display='block';return;}
+  const {data:prof,error}=await sb.from('profiles').select('id,is_teacher').eq('username',u).maybeSingle();
+  if(error||!prof){msg.className='amsg err';msg.textContent='Username not found.';msg.style.display='block';return;}
+  if(prof.is_teacher){msg.className='amsg ok';msg.textContent=u+' is already a teacher!';msg.style.display='block';return;}
+  const {error:e2}=await sb.rpc('promote_teacher',{p_username:u,p_code:c});
+  if(e2){
+    const {error:e3}=await sb.from('profiles').update({is_teacher:true}).eq('username',u);
+    if(e3){msg.className='amsg err';msg.textContent='Run in Supabase SQL: UPDATE profiles SET is_teacher=true WHERE username=\''+u+'\';';msg.style.display='block';return;}
+  }
+  msg.className='amsg ok';msg.textContent='✓ '+u+' is now a teacher! Sign in to see 🎓 Panel.';msg.style.display='block';
+  document.getElementById('mt-u').value='';document.getElementById('mt-c').value='';
+}
+
+// ── TP: BRACKET ───────────────────────
 async function tpLoadBracket(){
   const selEl=document.getElementById('tp-bsel');
   const edEl=document.getElementById('tp-bed');
-  selEl.innerHTML=''; edEl.innerHTML='<div class="spin">Loading...</div>';
-  const {data:bks} = await sb.from('brackets').select('*').order('created_at',{ascending:false});
+  edEl.innerHTML='<div class="spin">Loading...</div>';
+  const {data:bks}=await sb.from('brackets').select('*').order('created_at',{ascending:false});
   tpBrackets=bks||[];
-  if(!tpBrackets.length){
-    selEl.innerHTML='<p style="color:var(--muted);font-size:.8rem;">No brackets yet.</p>';
-    edEl.innerHTML=''; return;
-  }
+  if(!tpBrackets.length){selEl.innerHTML='<p style="color:var(--muted);font-size:.8rem;">No brackets yet.</p>';edEl.innerHTML='';return;}
   selEl.innerHTML='<div class="brow">'+tpBrackets.map(b=>
     `<button class="bsm${b.is_active?' gn':''}" onclick="tpSelectBracket(${b.id})">${b.name}${b.is_active?' ★':''}</button>`
   ).join('')+'</div>';
-  const active=tpBrackets.find(b=>b.is_active)||tpBrackets[0];
-  tpActiveBid=active.id;
+  const def=tpBrackets.find(b=>b.is_active)||tpBrackets[0];
+  tpActiveBid=def.id;
   await tpLoadMatchups();
 }
 
-async function tpSelectBracket(id){
-  tpActiveBid=id;
-  await tpLoadMatchups();
-}
+async function tpSelectBracket(id){tpActiveBid=id;await tpLoadMatchups();}
 
 async function tpLoadMatchups(){
   const el=document.getElementById('tp-bed');
   const bk=tpBrackets.find(b=>b.id===tpActiveBid);
-  if(!bk){ el.innerHTML=''; return; }
-  const {data:ms} = await sb.from('matchups').select('*').eq('bracket_id',tpActiveBid).order('round').order('position');
+  if(!bk){el.innerHTML='';return;}
+  const {data:ms}=await sb.from('matchups').select('*').eq('bracket_id',tpActiveBid).order('round').order('position');
   tpMatchups=ms||[];
   const rn=RNAMES[lang]||RNAMES.en;
   let html=`<div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-bottom:.75rem;">
     <span style="font-family:'Orbitron',monospace;font-size:.78rem;color:var(--g4);">${bk.name}</span>
-    <span class="bdg ${bk.is_active?'vt':'pd'}">${bk.is_active?'ACTIVE':'INACTIVE'}</span>
-    ${!bk.is_active?`<button class="bsm gn" onclick="tpSetActive(${bk.id})">Set Active</button>`:''}
+    <span class="bdg ${bk.is_active?'act':'pd'}">${bk.is_active?tx('active'):tx('inactive')}</span>
+    ${!bk.is_active?`<button class="bsm gn" onclick="tpSetActive(${bk.id})">${tx('setactive')}</button>`:''}
   </div>
   <div class="brow"><button class="bsm gn" onclick="openAddMatch()">+ Add Match</button></div>`;
-  if(!tpMatchups.length){
-    html+='<div class="empty"><p>No matches yet.</p></div>';
-    el.innerHTML=html; return;
-  }
+  if(!tpMatchups.length){html+='<div class="empty"><p>No matches. Add some above.</p></div>';el.innerHTML=html;return;}
   html+=`<div style="overflow-x:auto;"><table class="dtbl">
-    <thead><tr><th>Round</th><th>Pos</th><th>Song A</th><th>Song B</th><th>Status</th><th>A / B Votes</th><th>Winner</th><th>Actions</th></tr></thead>
+    <thead><tr><th>Round</th><th>Pos</th><th>Song A</th><th>Song B</th><th>Status</th><th>A/B Votes</th><th>Winner</th><th>Actions</th></tr></thead>
     <tbody>${tpMatchups.map(m=>`<tr>
-      <td>${rn[m.round]||m.round}</td>
-      <td>${m.position}</td>
-      <td>${m.song_a||'—'}</td>
-      <td>${m.song_b||'—'}</td>
+      <td>${rn[m.round]||m.round}</td><td>${m.position}</td>
+      <td>${m.song_a||'—'}</td><td>${m.song_b||'—'}</td>
       <td><span class="bdg ${m.status==='voting'?'vt':m.status==='closed'?'cl':'pd'}">${m.status}</span></td>
       <td>${m.votes_a||0} / ${m.votes_b||0}</td>
       <td>${m.winner?(m.winner==='a'?'▶ '+(m.song_a||'A'):'▶ '+(m.song_b||'B')):'—'}</td>
       <td><div class="tact">
         ${m.status==='pending'?`<button class="bsm gn" onclick="tpStartVoting(${m.id})">${tx('startvoting')}</button>`:''}
         ${m.status==='voting'?`<button class="bsm wn" onclick="tpCloseMatchup(${m.id})">${tx('closevoting')}</button>`:''}
+        ${m.votes_a||m.votes_b?`<button class="bsm rd" onclick="tpResetMatchVotes(${m.id})">${tx('resetvotes')}</button>`:''}
         <button class="bsm" onclick="openEditMatch(${m.id})">${tx('edit')}</button>
         <button class="bsm rd" onclick="tpDelMatch(${m.id})">${tx('delete')}</button>
       </div></td>
-    </tr>`).join('')}</tbody>
-  </table></div>`;
+    </tr>`).join('')}</tbody></table></div>`;
   el.innerHTML=html;
 }
 
 async function addBracket(){
   const name=(document.getElementById('ab-name').value||'').trim();
-  const name_fr=(document.getElementById('ab-name-fr').value||'').trim();
-  if(!name){ alert(tx('err_fields')); return; }
+  const name_fr=(document.getElementById('ab-fr').value||'').trim();
+  if(!name){alert(tx('err_fields'));return;}
   await sb.from('brackets').insert({name,name_fr:name_fr||null,is_active:false});
   closeM('m-addbracket');
-  document.getElementById('ab-name').value='';
-  document.getElementById('ab-name-fr').value='';
-  tpLoadBracket();
+  document.getElementById('ab-name').value='';document.getElementById('ab-fr').value='';
+  tpLoadBracket();loadBracketPage();
 }
 
 async function tpSetActive(id){
-  await sb.from('brackets').update({is_active:false}).neq('id',0);
+  await sb.from('brackets').update({is_active:false}).gte('id',0);
   await sb.from('brackets').update({is_active:true}).eq('id',id);
-  tpLoadBracket();
+  tpLoadBracket();loadBracketPage();
 }
 
 async function tpDelBracket(){
-  if(!tpActiveBid){ alert('Select a bracket first.'); return; }
+  if(!tpActiveBid){alert('Select a bracket first.');return;}
   if(!confirm(tx('confirmdelete'))) return;
+  await sb.from('votes').delete().in('matchup_id',tpMatchups.map(m=>m.id));
   await sb.from('matchups').delete().eq('bracket_id',tpActiveBid);
   await sb.from('brackets').delete().eq('id',tpActiveBid);
-  tpActiveBid=null; tpBrackets=[];
-  tpLoadBracket();
+  tpActiveBid=null;tpBrackets=[];
+  tpLoadBracket();loadBracketPage();
 }
 
 async function tpStartVoting(id){
   await sb.from('matchups').update({status:'voting'}).eq('id',id);
-  tpLoadMatchups(); loadBracket();
+  tpLoadMatchups();loadBracketPage();
 }
 
 async function tpCloseMatchup(id){
   if(!confirm('Stop voting and advance the winner?')) return;
   const {data,error}=await sb.rpc('close_matchup',{p_matchup_id:id});
-  if(error){ alert('Error: '+error.message); return; }
-  if(!data||!data.ok){ alert((data&&data.error)||'Error closing matchup.'); return; }
-  tpLoadMatchups(); loadBracket();
+  if(error){alert('Error: '+error.message);return;}
+  if(!data||!data.ok){alert((data&&data.error)||'Error.');return;}
+  tpLoadMatchups();loadBracketPage();
+}
+
+async function tpResetMatchVotes(id){
+  if(!confirm('Reset votes for this matchup?')) return;
+  await sb.from('votes').delete().eq('matchup_id',id);
+  await sb.from('matchups').update({votes_a:0,votes_b:0,winner:null,status:'pending'}).eq('id',id);
+  // clear local myVotes cache for this match
+  delete myVotes[id];
+  tpLoadMatchups();loadBracketPage();
+}
+
+async function tpResetAllVotes(){
+  if(!confirm('Reset ALL votes across ALL matchups? This cannot be undone.')) return;
+  await sb.from('votes').delete().gte('id',0);
+  await sb.from('matchups').update({votes_a:0,votes_b:0,winner:null,status:'pending'}).gte('id',0);
+  myVotes={};
+  tpLoadVotes();tpLoadMatchups();loadBracketPage();
 }
 
 async function tpDelMatch(id){
   if(!confirm(tx('confirmdelete'))) return;
+  await sb.from('votes').delete().eq('matchup_id',id);
   await sb.from('matchups').delete().eq('id',id);
-  tpLoadMatchups(); loadBracket();
+  tpLoadMatchups();loadBracketPage();
 }
 
-// ── SONG PICKER ──────────────────────────────────────────────
+// ── SONG PICKER ───────────────────────
 async function ensureSongs(){
   if(!allSongs.length){
     const {data}=await sb.from('songs').select('*').order('title');
@@ -943,42 +1012,40 @@ async function ensureSongs(){
   }
 }
 
-function renderPicker(containerId, mode){
-  const el=document.getElementById(containerId);
+function renderPicker(cid,mode){
+  const el=document.getElementById(cid);
   const pA=mode==='add'?amPickA:emPickA;
   const pB=mode==='add'?amPickB:emPickB;
-  if(!allSongs.length){ el.innerHTML='<div style="color:var(--muted);font-size:.78rem;">'+tx('nosongspool')+'</div>'; return; }
+  if(!allSongs.length){el.innerHTML='<div style="color:var(--muted);font-size:.78rem;">'+tx('nosongspool')+'</div>';return;}
   el.innerHTML=allSongs.map((s,i)=>{
     const lbl=songLabel(s);
-    const isA=pA===lbl, isB=pB===lbl;
-    return '<div class="spkitem'+(isA?' sa':'')+(isB?' sb':'')+'" data-mode="'+mode+'" data-idx="'+i+'" onclick="pickSongByIdx(this)">'+( isA?'🟢 ':isB?'🔵 ':'')+lbl+'</div>';
+    const isA=pA===lbl,isB=pB===lbl;
+    return `<div class="spkitem${isA?' sa':''}${isB?' sb':''}" data-mode="${mode}" data-idx="${i}" onclick="pickSongByIdx(this)">${isA?'🟢 ':''}${isB?'🔵 ':''}${lbl}</div>`;
   }).join('');
 }
 
 function pickSongByIdx(el){
-  const mode=el.dataset.mode;
-  const idx=parseInt(el.dataset.idx);
+  const mode=el.dataset.mode,idx=parseInt(el.dataset.idx);
   if(isNaN(idx)||idx<0||idx>=allSongs.length) return;
-  const lbl=songLabel(allSongs[idx]);
-  pickSong(mode, lbl);
+  pickSong(mode,songLabel(allSongs[idx]));
 }
 
-function pickSong(mode, lbl){
+function pickSong(mode,lbl){
   if(mode==='add'){
-    if(amPickA===lbl){ amPickA=amPickB||null; amPickB=null; }
-    else if(amPickB===lbl){ amPickB=null; }
-    else if(!amPickA){ amPickA=lbl; }
-    else if(!amPickB){ amPickB=lbl; }
-    else { amPickA=lbl; amPickB=null; }
+    if(amPickA===lbl){amPickA=amPickB||null;amPickB=null;}
+    else if(amPickB===lbl){amPickB=null;}
+    else if(!amPickA){amPickA=lbl;}
+    else if(!amPickB){amPickB=lbl;}
+    else{amPickA=lbl;amPickB=null;}
     document.getElementById('am-albl').textContent=amPickA||'—';
     document.getElementById('am-blbl').textContent=amPickB||'—';
     renderPicker('am-spkr','add');
   } else {
-    if(emPickA===lbl){ emPickA=emPickB||null; emPickB=null; }
-    else if(emPickB===lbl){ emPickB=null; }
-    else if(!emPickA){ emPickA=lbl; }
-    else if(!emPickB){ emPickB=lbl; }
-    else { emPickA=lbl; emPickB=null; }
+    if(emPickA===lbl){emPickA=emPickB||null;emPickB=null;}
+    else if(emPickB===lbl){emPickB=null;}
+    else if(!emPickA){emPickA=lbl;}
+    else if(!emPickB){emPickB=lbl;}
+    else{emPickA=lbl;emPickB=null;}
     document.getElementById('em-albl').textContent=emPickA||'—';
     document.getElementById('em-blbl').textContent=emPickB||'—';
     renderPicker('em-spkr','edit');
@@ -986,8 +1053,8 @@ function pickSong(mode, lbl){
 }
 
 async function openAddMatch(){
-  allSongs=[]; await ensureSongs();
-  amPickA=null; amPickB=null;
+  allSongs=[];await ensureSongs();
+  amPickA=null;amPickB=null;
   document.getElementById('am-albl').textContent='—';
   document.getElementById('am-blbl').textContent='—';
   renderPicker('am-spkr','add');
@@ -995,12 +1062,10 @@ async function openAddMatch(){
 }
 
 async function openEditMatch(id){
-  allSongs=[]; await ensureSongs();
-  const m=tpMatchups.find(x=>x.id===id);
-  if(!m) return;
+  allSongs=[];await ensureSongs();
+  const m=tpMatchups.find(x=>x.id===id);if(!m) return;
   document.getElementById('em-id').value=id;
-  emPickA=m.song_a||null;
-  emPickB=m.song_b||null;
+  emPickA=m.song_a||null;emPickB=m.song_b||null;
   document.getElementById('em-albl').textContent=emPickA||'—';
   document.getElementById('em-blbl').textContent=emPickB||'—';
   renderPicker('em-spkr','edit');
@@ -1010,92 +1075,80 @@ async function openEditMatch(id){
 async function submitAddMatch(){
   const round=parseInt(document.getElementById('am-round').value)||1;
   const pos=parseInt(document.getElementById('am-pos').value)||0;
-  if(!amPickA||!amPickB){ alert('Select both songs.'); return; }
-  if(!tpActiveBid){ alert('No bracket selected.'); return; }
-  const {error}=await sb.from('matchups').insert({bracket_id:tpActiveBid,round,position:pos,song_a:amPickA,song_b:amPickB,votes_a:0,votes_b:0,winner:null,status:'pending'});
-  if(error){ alert('Error: '+error.message); return; }
-  closeM('m-addmatch');
-  amPickA=null; amPickB=null;
-  tpLoadMatchups(); loadBracket();
+  if(!amPickA||!amPickB){alert('Select both songs.');return;}
+  if(!tpActiveBid){alert('No bracket selected.');return;}
+  await sb.from('matchups').insert({bracket_id:tpActiveBid,round,position:pos,song_a:amPickA,song_b:amPickB,votes_a:0,votes_b:0,winner:null,status:'pending'});
+  closeM('m-addmatch');amPickA=null;amPickB=null;
+  tpLoadMatchups();loadBracketPage();
 }
 
 async function submitEditMatch(){
   const id=parseInt(document.getElementById('em-id').value);
-  if(!emPickA||!emPickB){ alert('Select both songs.'); return; }
-  const {error}=await sb.from('matchups').update({song_a:emPickA,song_b:emPickB}).eq('id',id);
-  if(error){ alert('Error: '+error.message); return; }
-  closeM('m-editmatch');
-  emPickA=null; emPickB=null;
-  tpLoadMatchups(); loadBracket();
+  if(!emPickA||!emPickB){alert('Select both songs.');return;}
+  await sb.from('matchups').update({song_a:emPickA,song_b:emPickB}).eq('id',id);
+  closeM('m-editmatch');emPickA=null;emPickB=null;
+  tpLoadMatchups();loadBracketPage();
 }
 
-// ── TEACHER: SONGS ───────────────────────────────────────────
+// ── TP: SONGS ─────────────────────────
 async function tpLoadSongs(){
   const el=document.getElementById('tp-slist');
   el.innerHTML='<div class="spin">Loading...</div>';
   const {data}=await sb.from('songs').select('*').order('title');
   allSongs=data||[];
-  if(!allSongs.length){ el.innerHTML=`<div class="empty"><p>${tx('nosongspool')}</p></div>`; return; }
+  if(!allSongs.length){el.innerHTML=`<div class="empty"><p>${tx('nosongspool')}</p></div>`;return;}
   el.innerHTML=`<div style="overflow-x:auto;"><table class="dtbl">
-    <thead><tr><th>Title EN</th><th>Title FR</th><th>Artist</th><th>YouTube</th><th></th></tr></thead>
+    <thead><tr><th>Title</th><th>FR</th><th>Artist</th><th>YouTube</th><th></th></tr></thead>
     <tbody>${allSongs.map(s=>`<tr>
-      <td>${s.title}</td>
-      <td>${s.title_fr||'—'}</td>
-      <td>${s.artist||'—'}</td>
+      <td>${s.title}</td><td>${s.title_fr||'—'}</td><td>${s.artist||'—'}</td>
       <td style="font-family:monospace;font-size:.7rem;color:var(--muted);">${s.youtube_id||'—'}</td>
       <td><button class="bsm rd" onclick="tpDelSong(${s.id})">${tx('delete')}</button></td>
-    </tr>`).join('')}</tbody>
-  </table></div>`;
+    </tr>`).join('')}</tbody></table></div>`;
 }
 
 async function submitAddSong(){
   const title=(document.getElementById('as-title').value||'').trim();
-  const title_fr=(document.getElementById('as-title-fr').value||'').trim();
+  const title_fr=(document.getElementById('as-fr').value||'').trim();
   const artist=(document.getElementById('as-artist').value||'').trim();
   const yt=(document.getElementById('as-yt').value||'').trim();
-  if(!title){ alert(tx('err_fields')); return; }
-  const {error}=await sb.from('songs').insert({title,title_fr:title_fr||null,artist:artist||null,youtube_id:ytId(yt)||null});
-  if(error){ alert('Error: '+error.message); return; }
+  if(!title){alert(tx('err_fields'));return;}
+  await sb.from('songs').insert({title,title_fr:title_fr||null,artist:artist||null,youtube_id:ytId(yt)||null});
   closeM('m-addsong');
-  ['as-title','as-title-fr','as-artist','as-yt'].forEach(id=>{ document.getElementById(id).value=''; });
+  ['as-title','as-fr','as-artist','as-yt'].forEach(id=>document.getElementById(id).value='');
   tpLoadSongs();
 }
 
 async function tpDelSong(id){
   if(!confirm(tx('confirmdelete'))) return;
-  await sb.from('songs').delete().eq('id',id);
-  tpLoadSongs();
+  await sb.from('songs').delete().eq('id',id);tpLoadSongs();
 }
 
-// ── TEACHER: VIDEOS ──────────────────────────────────────────
+// ── TP: VIDEOS ────────────────────────
+let _vidCache=[];
 async function tpLoadVideos(){
   const el=document.getElementById('tp-vlist');
   el.innerHTML='<div class="spin">Loading...</div>';
   const {data}=await sb.from('videos').select('*').order('created_at',{ascending:false});
-  if(!data||!data.length){ el.innerHTML=`<div class="empty"><p>${tx('novideos')}</p></div>`; return; }
+  _vidCache=data||[];
+  if(!_vidCache.length){el.innerHTML=`<div class="empty"><p>${tx('novideos')}</p></div>`;return;}
   el.innerHTML=`<div style="overflow-x:auto;"><table class="dtbl">
-    <thead><tr><th>Title EN</th><th>FR</th><th>YouTube</th><th>Category</th><th></th></tr></thead>
-    <tbody>${data.map(v=>`<tr>
-      <td>${v.title}</td>
-      <td>${v.title_fr||'—'}</td>
+    <thead><tr><th>Title</th><th>FR</th><th>YouTube</th><th>Category</th><th></th></tr></thead>
+    <tbody>${_vidCache.map(v=>`<tr>
+      <td>${v.title}</td><td>${v.title_fr||'—'}</td>
       <td style="font-family:monospace;font-size:.7rem;color:var(--muted);">${ytId(v.youtube_id)}</td>
       <td>${v.category||'—'}</td>
       <td><div class="tact">
         <button class="bsm" onclick="openEditVid(${v.id})">${tx('edit')}</button>
         <button class="bsm rd" onclick="tpDelVideo(${v.id})">${tx('delete')}</button>
       </div></td>
-    </tr>`).join('')}</tbody>
-  </table></div>`;
-  // store for edit lookup
-  window._vidCache = data;
+    </tr>`).join('')}</tbody></table></div>`;
 }
 
 function openEditVid(id){
-  const v=(window._vidCache||[]).find(x=>x.id===id);
-  if(!v) return;
+  const v=_vidCache.find(x=>x.id===id);if(!v) return;
   document.getElementById('ev-id').value=v.id;
   document.getElementById('ev-title').value=v.title;
-  document.getElementById('ev-title-fr').value=v.title_fr||'';
+  document.getElementById('ev-fr').value=v.title_fr||'';
   document.getElementById('ev-yt').value=v.youtube_id;
   document.getElementById('ev-cat').value=v.category||'';
   document.getElementById('ev-desc').value=v.description||'';
@@ -1104,49 +1157,45 @@ function openEditVid(id){
 
 async function submitAddVideo(){
   const title=(document.getElementById('av-title').value||'').trim();
-  const title_fr=(document.getElementById('av-title-fr').value||'').trim();
+  const title_fr=(document.getElementById('av-fr').value||'').trim();
   const yt=(document.getElementById('av-yt').value||'').trim();
   const cat=(document.getElementById('av-cat').value||'').trim();
   const desc=(document.getElementById('av-desc').value||'').trim();
-  if(!title||!yt){ alert(tx('err_fields')); return; }
-  const {error}=await sb.from('videos').insert({title,title_fr:title_fr||null,youtube_id:ytId(yt),category:cat||null,description:desc||null});
-  if(error){ alert('Error: '+error.message); return; }
+  if(!title||!yt){alert(tx('err_fields'));return;}
+  await sb.from('videos').insert({title,title_fr:title_fr||null,youtube_id:ytId(yt),category:cat||null,description:desc||null});
   closeM('m-addvid');
-  ['av-title','av-title-fr','av-yt','av-cat','av-desc'].forEach(id=>{ document.getElementById(id).value=''; });
-  tpLoadVideos();
+  ['av-title','av-fr','av-yt','av-cat','av-desc'].forEach(id=>document.getElementById(id).value='');
+  tpLoadVideos();loadVideos();
 }
 
 async function submitEditVideo(){
   const id=document.getElementById('ev-id').value;
   const title=(document.getElementById('ev-title').value||'').trim();
-  const title_fr=(document.getElementById('ev-title-fr').value||'').trim();
+  const title_fr=(document.getElementById('ev-fr').value||'').trim();
   const yt=(document.getElementById('ev-yt').value||'').trim();
   const cat=(document.getElementById('ev-cat').value||'').trim();
   const desc=(document.getElementById('ev-desc').value||'').trim();
-  const {error}=await sb.from('videos').update({title,title_fr:title_fr||null,youtube_id:ytId(yt),category:cat||null,description:desc||null}).eq('id',id);
-  if(error){ alert('Error: '+error.message); return; }
-  closeM('m-editvid');
-  tpLoadVideos();
+  await sb.from('videos').update({title,title_fr:title_fr||null,youtube_id:ytId(yt),category:cat||null,description:desc||null}).eq('id',id);
+  closeM('m-editvid');tpLoadVideos();loadVideos();
 }
 
 async function tpDelVideo(id){
   if(!confirm(tx('confirmdelete'))) return;
-  await sb.from('videos').delete().eq('id',id);
-  tpLoadVideos();
+  await sb.from('videos').delete().eq('id',id);tpLoadVideos();loadVideos();
 }
 
-// ── TEACHER: VOTE RESULTS ─────────────────────────────────────
+// ── TP: VOTES ─────────────────────────
 async function tpLoadVotes(){
   const el=document.getElementById('tp-votes-out');
   el.innerHTML='<div class="spin">Loading...</div>';
-  const {data:ms,error}=await sb.from('matchups').select('*,brackets(name)').order('bracket_id').order('round').order('position');
-  if(error||!ms||!ms.length){ el.innerHTML=`<div class="empty"><p>${tx('novotes')}</p></div>`; return; }
+  const {data:ms}=await sb.from('matchups').select('*,brackets(name)').order('bracket_id').order('round').order('position');
+  if(!ms||!ms.length){el.innerHTML=`<div class="empty"><p>${tx('novotes')}</p></div>`;return;}
   const rn=RNAMES[lang]||RNAMES.en;
-  let html=''; let curBid=null;
+  let html='';let curBid=null;
   ms.forEach(m=>{
     if(m.bracket_id!==curBid){
       curBid=m.bracket_id;
-      html+=`<div style="font-family:'Orbitron',monospace;font-size:.7rem;color:var(--g4);letter-spacing:2px;margin:1rem 0 .5rem;">${(m.brackets&&m.brackets.name)||('Bracket '+m.bracket_id)}</div>`;
+      html+=`<div style="font-family:'Orbitron',monospace;font-size:.7rem;color:var(--g4);letter-spacing:2px;margin:1rem 0 .5rem;">${(m.brackets&&m.brackets.name)||'Bracket '+m.bracket_id}</div>`;
     }
     const tv=(m.votes_a||0)+(m.votes_b||0);
     const pa=tv?Math.round((m.votes_a/tv)*100):0;
@@ -1154,25 +1203,62 @@ async function tpLoadVotes(){
     html+=`<div style="background:var(--dim);border:var(--bdr);padding:.7rem;margin-bottom:.5rem;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.45rem;">
         <span style="font-size:.72rem;color:var(--muted);">${rn[m.round]||'R'+m.round} · Pos ${m.position}</span>
-        <span class="bdg ${m.status==='voting'?'vt':m.status==='closed'?'cl':'pd'}">${m.status}</span>
+        <div style="display:flex;gap:.3rem;align-items:center;">
+          <span class="bdg ${m.status==='voting'?'vt':m.status==='closed'?'cl':'pd'}">${m.status}</span>
+          <button class="bsm rd" style="font-size:.65rem;padding:2px 7px;" onclick="tpResetMatchVotes(${m.id})">Reset</button>
+        </div>
       </div>
-      <div class="rbar">
-        <div class="rlbl" style="color:${m.winner==='a'?'var(--g3)':'var(--text)'};">${m.song_a||'TBD'}${m.winner==='a'?' ▶':''}</div>
-        <div class="rtrack"><div class="rfill" style="width:${pa}%;background:${m.winner==='a'?'var(--g3)':'var(--g4)'};"></div></div>
-        <div class="rcnt">${m.votes_a||0} (${pa}%)</div>
-      </div>
-      <div class="rbar">
-        <div class="rlbl" style="color:${m.winner==='b'?'var(--g3)':'var(--text)'};">${m.song_b||'TBD'}${m.winner==='b'?' ▶':''}</div>
-        <div class="rtrack"><div class="rfill" style="width:${pb}%;background:${m.winner==='b'?'var(--g3)':'#44aaff'};"></div></div>
-        <div class="rcnt">${m.votes_b||0} (${pb}%)</div>
-      </div>
+      <div class="rbar"><div class="rlbl" style="color:${m.winner==='a'?'var(--g3)':'var(--text)'};">${m.song_a||'TBD'}${m.winner==='a'?' ▶':''}</div><div class="rtrack"><div class="rfill" style="width:${pa}%;background:${m.winner==='a'?'var(--g3)':'var(--g4)'};"></div></div><div class="rcnt">${m.votes_a||0} (${pa}%)</div></div>
+      <div class="rbar"><div class="rlbl" style="color:${m.winner==='b'?'var(--g3)':'var(--text)'};">${m.song_b||'TBD'}${m.winner==='b'?' ▶':''}</div><div class="rtrack"><div class="rfill" style="width:${pb}%;background:${m.winner==='b'?'var(--g3)':'#44aaff'};"></div></div><div class="rcnt">${m.votes_b||0} (${pb}%)</div></div>
     </div>`;
   });
   el.innerHTML=html;
 }
 
-// ── INIT ─────────────────────────────────────────────────────
-document.getElementById('cfgbanner').style.display='none';
+// ── TP: USERS ─────────────────────────
+async function tpLoadUsers(){
+  const el=document.getElementById('tp-users-out');
+  el.innerHTML='<div class="spin">Loading...</div>';
+  const {data:users}=await sb.from('profiles').select('*').order('created_at',{ascending:false});
+  if(!users||!users.length){el.innerHTML='<div class="empty"><p>No users.</p></div>';return;}
+  el.innerHTML=`<div style="overflow-x:auto;"><table class="dtbl">
+    <thead><tr><th>Username</th><th>Role</th><th>Joined</th><th>Actions</th></tr></thead>
+    <tbody>${users.map(u=>`<tr>
+      <td style="font-family:'Orbitron',monospace;font-size:.72rem;">${u.username}</td>
+      <td><span class="bdg ${u.is_teacher?'tch':'pd'}">${u.is_teacher?'Teacher':'Student'}</span></td>
+      <td style="font-size:.72rem;color:var(--muted);">${new Date(u.created_at).toLocaleDateString()}</td>
+      <td><div class="tact">
+        ${!u.is_teacher?`<button class="bsm gn" onclick="tpPromoteUser('${u.username}')">Make Teacher</button>`:''}
+        ${u.is_teacher&&u.id!==currentUser?.id?`<button class="bsm wn" onclick="tpDemoteUser('${u.username}')">Remove Teacher</button>`:''}
+        <button class="bsm rd" onclick="tpDeleteUser('${u.id}','${u.username}')">Delete</button>
+      </div></td>
+    </tr>`).join('')}</tbody></table></div>`;
+}
+
+async function tpPromoteUser(uname){
+  if(!confirm('Make '+uname+' a teacher?')) return;
+  await sb.from('profiles').update({is_teacher:true}).eq('username',uname);
+  tpLoadUsers();
+}
+
+async function tpDemoteUser(uname){
+  if(!confirm('Remove teacher role from '+uname+'?')) return;
+  await sb.from('profiles').update({is_teacher:false}).eq('username',uname);
+  tpLoadUsers();
+}
+
+async function tpDeleteUser(uid,uname){
+  if(!confirm('Delete account "'+uname+'"? This also deletes all their votes.')) return;
+  // Delete votes first
+  await sb.from('votes').delete().eq('user_id',uid);
+  // Delete profile
+  await sb.from('profiles').delete().eq('id',uid);
+  // Note: deleting from auth.users requires service_role key — show note
+  tpLoadUsers();
+  alert('Profile and votes deleted. To fully remove from Supabase Auth, go to Supabase → Authentication → Users and delete "'+uname+'@maniemusicale.internal"');
+}
+
+// ── INIT ──────────────────────────────
 applyLang();
 </script>
 </body>
