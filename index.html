@@ -261,7 +261,10 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
       <input type="password" id="inp-p" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doAuth()">
     </div>
     <button class="bprim" id="authbtn" onclick="doAuth()">SIGN IN</button>
-    <div class="ltog"><span id="tog-txt">No account?</span> <a onclick="toggleMode()" id="tog-lnk">Register</a></div>
+    <div style="margin-top:.7rem;">
+      <button onclick="toggleMode()" id="tog-lnk" style="width:100%;background:transparent;border:1px solid var(--g5);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:.88rem;letter-spacing:1px;padding:9px;cursor:pointer;transition:all .18s;text-transform:uppercase;" onmouseover="this.style.borderColor='var(--g3)';this.style.color='var(--g3)'" onmouseout="this.style.borderColor='var(--g5)';this.style.color='var(--text)'">Register</button>
+    </div>
+    <div class="ltog" style="margin-top:.6rem;"><span id="tog-txt">No account?</span></div>
     <div style="margin-top:1.1rem;padding-top:.9rem;border-top:1px solid var(--g2);text-align:center;">
       <a onclick="openM('m-teacher-setup')" style="font-size:.72rem;color:var(--muted);cursor:pointer;letter-spacing:1px;">🎓 Teacher setup</a>
     </div>
@@ -730,22 +733,20 @@ async function loadStats(){
 // ── VIDEOS ────────────────────────────
 // 16 Manie Musicale 2026 songs hardcoded as videos
 const MANIE_SONGS=[
-  {title:'Toucher la lune',artist:'Maheva',yt:'DenfiN2CUtI'},
-  {title:'Extraordinaire',artist:'Fredz',yt:'hqnLMQRbLbs'},
-  {title:'Je rentre à la maison',artist:'Boulevard des Airs',yt:'bPlCEpDFTHw'},
-  {title:'No Fear',artist:'Saël & YaniSs Odua',yt:'QWp4ZjS5aPs'},
-  {title:'Aussi simple que toi',artist:'Lenaïg',yt:'iyTY7_1Lz0k'},
-  {title:'Nouici',artist:'Jyeuhair',yt:'VX0MaUfwGVs'},
-  {title:'Afro beauté',artist:'Eloïsha Iza',yt:'kCFMGJBtPfk'},
-  {title:'Et si',artist:'Billie du Page',yt:'tgHxFRVQ8jU'},
-  {title:'Chapeau',artist:'Port-Aux-Poutines',yt:'AQXhxlzNxPs'},
-  {title:'Monde parallèle',artist:'Richy Jay',yt:'YE4iqduTL9I'},
-  {title:'Ton visage',artist:'MPL',yt:'v0l9_JJa8N4'},
-  {title:"La vie qu'on mène",artist:'Mentissa',yt:'3u9JDFvhaXM'},
-  {title:"Peur d'y croire",artist:'Charlie Oz',yt:'D8tFQcYkzlE'},
-  {title:'Le musée imaginaire',artist:'Oli',yt:'nNQqerHJFYs'},
-  {title:'Demain demain',artist:'Luiza',yt:'hYGsOW_CGUA'},
-  {title:'Jamais oublier',artist:'Kelly Bado',yt:'N1SkaXPrjv8'}
+  {title:'Toucher la lune (2026)',artist:'Maheva',yt:'01ml8ZWCwnU'},
+  {title:'Je rentre à la maison (2026)',artist:'Boulevard des Airs',yt:'O0JiF6AMRdY'},
+  {title:'No Fear (2026)',artist:'Saël & YaniSs Odua',yt:'9HZeMaXPKJU'},
+  {title:'Aussi simple que toi (2026)',artist:'Lenaïg',yt:'FKbExt_LZ7c'},
+  {title:'Nouici (2026)',artist:'Jyeuhair',yt:'9oadjPj_Wtk'},
+  {title:'Afro beauté (2026)',artist:'Eloïsha Iza',yt:'kCFMGJBtPfk'},
+  {title:'Et si (2026)',artist:'Billie du Page',yt:'tgHxFRVQ8jU'},
+  {title:'Monde parallèle (2026)',artist:'Richy Jay',yt:'YE4iqduTL9I'},
+  {title:'Ton visage (2026)',artist:'MPL',yt:'dP-kQXDPfMM'},
+  {title:"La vie qu'on mène (2026)",artist:'Mentissa',yt:'3u9JDFvhaXM'},
+  {title:"Peur d'y croire (2026)",artist:'Charlie Oz',yt:'JBIbLPylOB0'},
+  {title:'Le musée imaginaire (2026)',artist:'Oli',yt:'zttPDydAIKI'},
+  {title:'Demain demain (2026)',artist:'Luiza',yt:'hYGsOW_CGUA'},
+  {title:'Jamais oublier (2026)',artist:'Kelly Bado',yt:'YiX8LBKSHIg'}
 ];
 
 async function loadVideos(){
