@@ -543,11 +543,34 @@ const TX={
       openleg:'Voting open',pendleg:'Pending',closedleg:'Closed',
       startvoting:'Start Voting',closevoting:'Stop & Advance',
       edit:'Edit',delete:'Delete',resetvotes:'Reset Votes',
+      resetall:'Reset ALL Votes',
       err_fields:'Fill in all required fields.',
       err_user:'Username must be 3+ characters.',
       err_taken:'Username already taken.',
       active:'Active',inactive:'Inactive',setactive:'Set Active',
-      allbrackets:'All Brackets',activebracket:'★ Active'},
+      allbrackets:'All Brackets',activebracket:'★ Active',
+      welcome:'WELCOME · LA MUSIQUE EN FOLIE',
+      bracket_mgr:'🏆 BRACKET MANAGER',
+      songs_pool:'🎵 SONGS POOL',
+      vid_mgr:'🎬 VIDEOS',
+      vote_results:'📊 VOTE RESULTS',
+      user_mgmt:'👥 USER MANAGEMENT',
+      account:'👤 ACCOUNT',
+      new_bracket:'+ New Bracket',del_bracket:'Delete Bracket',
+      add_match:'+ Add Match',add_song:'+ Add Song',add_video:'+ Add Video',
+      make_teacher:'Make Teacher',remove_teacher:'Remove Teacher',
+      register:'Register',sign_in:'Sign In',
+      teacher_setup:'🎓 Teacher setup',
+      song_a:'Song A',song_b:'Song B',
+      round:'Round',position:'Position (0-based)',
+      name_en:'Name (EN)',name_fr:'Name (FR)',
+      title_en:'Title (EN)',title_fr:'Title (FR)',
+      artist:'Artist',yt_id:'YouTube ID or URL',
+      category:'Category',description:'Description',
+      cancel:'Cancel',create:'Create',save:'Save',add:'Add',
+      logged_in_as:'LOGGED IN AS',
+      username:'Username',role:'Role',joined:'Joined',actions:'Actions',
+      student:'Student',teacher:'Teacher'},
   fr:{home:'Accueil',videos:'Vidéos',bracket:'Bracket',logout:'Déconnexion',
       signin:'SE CONNECTER',signup:"S'INSCRIRE",login:'CONNEXION',
       noaccount:'Pas de compte?',haveaccount:'Déjà un compte?',
@@ -557,11 +580,34 @@ const TX={
       openleg:'Vote ouvert',pendleg:'En attente',closedleg:'Fermé',
       startvoting:'Démarrer vote',closevoting:'Arrêter & Avancer',
       edit:'Modifier',delete:'Supprimer',resetvotes:'Réinitialiser',
+      resetall:'Réinitialiser TOUS',
       err_fields:'Remplissez tous les champs.',
       err_user:"3+ caractères requis.",
       err_taken:"Nom d'utilisateur déjà pris.",
       active:'Actif',inactive:'Inactif',setactive:'Activer',
-      allbrackets:'Tous les Brackets',activebracket:'★ Actif'}
+      allbrackets:'Tous les Brackets',activebracket:'★ Actif',
+      welcome:'BIENVENUE · LA MUSIQUE EN FOLIE',
+      bracket_mgr:'🏆 GESTION DU BRACKET',
+      songs_pool:'🎵 CHANSONS',
+      vid_mgr:'🎬 VIDÉOS',
+      vote_results:'📊 RÉSULTATS DES VOTES',
+      user_mgmt:'👥 GESTION DES UTILISATEURS',
+      account:'👤 COMPTE',
+      new_bracket:'+ Nouveau Bracket',del_bracket:'Supprimer Bracket',
+      add_match:'+ Ajouter Match',add_song:'+ Ajouter Chanson',add_video:'+ Ajouter Vidéo',
+      make_teacher:'Rendre Enseignant',remove_teacher:'Retirer Enseignant',
+      register:"S'inscrire",sign_in:'Se connecter',
+      teacher_setup:'🎓 Config enseignant',
+      song_a:'Chanson A',song_b:'Chanson B',
+      round:'Round',position:'Position (base 0)',
+      name_en:'Nom (EN)',name_fr:'Nom (FR)',
+      title_en:'Titre (EN)',title_fr:'Titre (FR)',
+      artist:'Artiste',yt_id:'URL ou ID YouTube',
+      category:'Catégorie',description:'Description',
+      cancel:'Annuler',create:'Créer',save:'Enregistrer',add:'Ajouter',
+      logged_in_as:'CONNECTÉ EN TANT QUE',
+      username:"Nom d'utilisateur",role:'Rôle',joined:'Inscrit',actions:'Actions',
+      student:'Élève',teacher:'Enseignant'}
 };
 const tx=k=>(TX[lang]||TX.en)[k]||k;
 
@@ -580,15 +626,27 @@ function applyLang(){
   document.getElementById('ltitle').textContent=tx('login');
   document.getElementById('authbtn').textContent=authMode==='login'?tx('signin'):tx('signup');
   document.getElementById('tog-txt').textContent=authMode==='login'?tx('noaccount'):tx('haveaccount');
-  document.getElementById('tog-lnk').textContent=authMode==='login'?'Register':'Sign In';
-  document.getElementById('hero-sub').textContent=lang==='fr'?'BIENVENUE · LA MUSIQUE EN FOLIE':'WELCOME · LA MUSIQUE EN FOLIE';
+  document.getElementById('tog-lnk').textContent=authMode==='login'?tx('register'):tx('sign_in');
+  document.getElementById('hero-sub').textContent=tx('welcome');
   document.getElementById('sc-v').textContent=tx('videos').toUpperCase();
   document.getElementById('sc-b').textContent=tx('bracket').toUpperCase();
-  const lo=document.getElementById('leg-o');if(lo)lo.textContent=tx('openleg');
-  const lp=document.getElementById('leg-p');if(lp)lp.textContent=tx('pendleg');
-  const lc=document.getElementById('leg-c');if(lc)lc.textContent=tx('closedleg');
-  const tt=document.getElementById('ticker-track');
-  if(tt) tt.innerHTML=`<span>🎵 MANIE MUSICALE</span><span>⭐ ${lang==='fr'?'VOTEZ POUR VOTRE CHANSON':'VOTE FOR YOUR SONG'}</span><span>🏆 MARCH MADNESS</span><span>🎬 ${lang==='fr'?'LES VIDÉOS':'WATCH VIDEOS'}</span>`.repeat(2);
+  var lo=document.getElementById('leg-o');if(lo)lo.textContent=tx('openleg');
+  var lp=document.getElementById('leg-p');if(lp)lp.textContent=tx('pendleg');
+  var lc=document.getElementById('leg-c');if(lc)lc.textContent=tx('closedleg');
+  var tpLbls=[tx('bracket_mgr'),tx('songs_pool'),tx('vid_mgr'),tx('vote_results'),tx('user_mgmt'),tx('account')];
+  document.querySelectorAll('.tpitem').forEach(function(el,i){if(tpLbls[i])el.textContent=tpLbls[i];});
+  var rab=document.querySelector('#tps-votes .brow button');
+  if(rab) rab.textContent=tx('resetall');
+  var vh=document.getElementById('vh2');if(vh) vh.textContent=tx('videos');
+  var bh=document.getElementById('bh2');if(bh) bh.textContent=tx('bracket');
+  var tt=document.getElementById('ticker-track');
+  var tk='<span>🎵 MANIE MUSICALE</span><span>⭐ '+(lang==='fr'?'VOTEZ POUR VOTRE CHANSON':'VOTE FOR YOUR SONG')+'</span><span>🏆 MARCH MADNESS</span><span>🎬 '+(lang==='fr'?'LES VIDÉOS':'WATCH VIDEOS')+'</span>';
+  if(tt) tt.innerHTML=tk+tk;
+  if(currentUser){
+    var pg=document.querySelector('.page.on');
+    if(pg&&pg.id==='pg-videos') loadVideos();
+    if(pg&&pg.id==='pg-bracket') loadBracketPage();
+  }
 }
 
 // ── UTILS ─────────────────────────────
@@ -727,26 +785,28 @@ function tpNav(btn,sec){
 // ── HOME ──────────────────────────────
 async function loadStats(){
   const {count}=await sb.from('videos').select('id',{count:'exact',head:true});
-  document.getElementById('sc-vc').textContent=(count||0)+' clips';
+  const total=MANIE_SONGS.length+(count||0);
+  document.getElementById('sc-vc').textContent=total+' clips';
 }
 
 // ── VIDEOS ────────────────────────────
 // 16 Manie Musicale 2026 songs hardcoded as videos
 const MANIE_SONGS=[
-  {title:'Toucher la lune (2026)',artist:'Maheva',yt:'01ml8ZWCwnU'},
-  {title:'Je rentre à la maison (2026)',artist:'Boulevard des Airs',yt:'O0JiF6AMRdY'},
-  {title:'No Fear (2026)',artist:'Saël & YaniSs Odua',yt:'9HZeMaXPKJU'},
-  {title:'Aussi simple que toi (2026)',artist:'Lenaïg',yt:'FKbExt_LZ7c'},
-  {title:'Nouici (2026)',artist:'Jyeuhair',yt:'9oadjPj_Wtk'},
-  {title:'Afro beauté (2026)',artist:'Eloïsha Iza',yt:'kCFMGJBtPfk'},
-  {title:'Et si (2026)',artist:'Billie du Page',yt:'tgHxFRVQ8jU'},
-  {title:'Monde parallèle (2026)',artist:'Richy Jay',yt:'YE4iqduTL9I'},
-  {title:'Ton visage (2026)',artist:'MPL',yt:'dP-kQXDPfMM'},
-  {title:"La vie qu'on mène (2026)",artist:'Mentissa',yt:'3u9JDFvhaXM'},
-  {title:"Peur d'y croire (2026)",artist:'Charlie Oz',yt:'JBIbLPylOB0'},
-  {title:'Le musée imaginaire (2026)',artist:'Oli',yt:'zttPDydAIKI'},
-  {title:'Demain demain (2026)',artist:'Luiza',yt:'hYGsOW_CGUA'},
-  {title:'Jamais oublier (2026)',artist:'Kelly Bado',yt:'YiX8LBKSHIg'}
+  // IDs verified from official teacher site (prentice.commons.hwdsb.on.ca)
+  {title:'Toucher la lune (2026)',   artist:'Maheva',             yt:'01ml8ZWCwnU'},
+  {title:'Je rentre à la maison (2026)', artist:'Boulevard des Airs', yt:'ZLKHtzDMG6o'},
+  {title:'No Fear (2026)',           artist:'Saël & YaniSs Odua', yt:'9HZeMaXPKJU'},
+  {title:'Aussi simple que toi (2026)', artist:'Lenaïg',          yt:'FKbExt_LZ7c'},
+  {title:'Nouici (2026)',            artist:'Jyeuhair',           yt:'9oadjPj_Wtk'},
+  {title:'Afro beauté (2026)',       artist:'Eloïsha Iza',        yt:'5Au9LBBaeLE'},
+  {title:'Et si (2026)',             artist:'Billie du Page',     yt:'tgHxFRVQ8jU'},
+  {title:'Monde parallèle (2026)',   artist:'Richy Jay',          yt:'YE4iqduTL9I'},
+  {title:'Ton visage (2026)',        artist:'MPL',                yt:'dP-kQXDPfMM'},
+  {title:"La vie qu'on mène (2026)", artist:'Mentissa',         yt:'3u9JDFvhaXM'},
+  {title:"Peur d'y croire (2026)",  artist:'Charlie Oz',        yt:'JBIbLPylOB0'},
+  {title:'Le musée imaginaire (2026)', artist:'Oli',              yt:'zttPDydAIKI'},
+  {title:'Demain demain (2026)',     artist:'Luiza',              yt:'hYGsOW_CGUA'},
+  {title:'Jamais oublier (2026)',    artist:'Kelly Bado',         yt:'YiX8LBKSHIg'}
 ];
 
 async function loadVideos(){
